@@ -1,0 +1,25 @@
+{
+  "name": "cream",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.js",
+  "bin": {
+    "cream": "./src/index.js"
+  },
+  "scripts": {
+    "lint": "eslint . --ext .js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.44.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^5.0.0-alpha.2",
+    "prettier": "^3.0.0"
+  },
+  "dependencies": {
+    "commander": "^11.0.0",
+    "sqlite3": "^5.1.6"
+  }
+}

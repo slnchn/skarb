@@ -15,9 +15,14 @@ This release targets two goals:
 | title       | varchar(255) |                        |
 | created\_at | datetime     | datetime('now', 'utc') |
 
-System table, users won't have access to it.
+System table, users won't have _direct_ access to it.
 
 We need this table to keep databases updateable.
+
+```
+cream db migrate -- it should find the latest applied migration in the database
+                    and then run all the available migrations after it
+```
 
 #### currencies
 

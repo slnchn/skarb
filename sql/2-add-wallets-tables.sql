@@ -1,6 +1,6 @@
 create table currencies (
     id integer primary key autoincrement,
-    title varchar(255) not null,
+    name varchar(255) not null,
     created_at datetime default (datetime('now', 'utc')),
     updated_at datetime default (datetime('now', 'utc')),
     deleted_at datetime default null
@@ -8,7 +8,7 @@ create table currencies (
 
 create table wallets (
     id integer primary key AUTOINCREMENT,
-    title varchar(255) not null,
+    name varchar(255) not null,
     currency_id integer not null,
     created_at datetime default (datetime('now', 'utc')),
     updated_at datetime default (datetime('now', 'utc')),
@@ -18,7 +18,7 @@ create table wallets (
 create table wallets_history (
     id integer primary key AUTOINCREMENT,
     wallet_id integer not null,
-    mouney_amount integer not null,
+    mouney_amount numeric not null,
     created_at datetime default (datetime('now', 'utc')),
     updated_at datetime default (datetime('now', 'utc')),
     deleted_at datetime default null

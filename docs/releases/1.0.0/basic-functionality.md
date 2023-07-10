@@ -1,13 +1,11 @@
 # Basic Functionality
 
-he app targets two goals:
+This release targets two goals:
 
 1. Keep data structured way;
-2. Ease data management operations;
+2. Allow data management operations;
 
-###
-
-### &#x20;Database structure
+### Database structure
 
 #### migrations
 
@@ -71,6 +69,4 @@ cream whistory list -- shows the list of wallets_history as a table
 cream whistory add -n "PKO Savings" -c 1 -- adds an entry to the wallets_history table
 cream whistory rm  1 -- deletes an entry from the wallets_history table
 ```
-
-### Commands
 

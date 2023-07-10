@@ -1,7 +1,8 @@
 # Table of contents
 
+## docs
+
 * [Welcome!](README.md)
-
-## 1.0.0
-
-* [Basic Functionality](1.0.0/basic-functionality.md)
+* [Releases](docs/releases/README.md)
+  * [1.0.0](docs/releases/1.0.0/README.md)
+    * [Basic Functionality](docs/releases/1.0.0/basic-functionality.md)

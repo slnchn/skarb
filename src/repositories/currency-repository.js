@@ -20,7 +20,6 @@ const insertCurrency = async ({ currency }) => {
           reject(err);
         }
 
-        console.table(rows);
         resolve(rows);
       },
     );
@@ -31,6 +30,24 @@ const insertCurrency = async ({ currency }) => {
   return latestInserted;
 };
 
+const selectCurrencies = async () => {
+  const db = await initDatabaseConnection();
+  const currencies = new Promise((resolve, reject) => {
+    db.all('SELECT * FROM currencies', (err, rows) => {
+      if (err) {
+        reject(err);
+      }
+
+      resolve(rows);
+    });
+  });
+
+  db.close();
+
+  return currencies;
+};
+
 module.exports = {
   insertCurrency,
+  selectCurrencies,
 };

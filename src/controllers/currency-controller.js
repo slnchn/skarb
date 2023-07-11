@@ -1,9 +1,22 @@
-const { insertCurrency } = require('../repositories/currency-repository');
+const {
+  insertCurrency,
+  selectCurrencies,
+} = require('../repositories/currency-repository');
 
 const handleAddCurrency = async (params) => {
   try {
     const { name: currency } = params;
-    await insertCurrency({ currency });
+    const result = await insertCurrency({ currency });
+    console.table(result);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const handleListCurrencies = async () => {
+  try {
+    const currencies = await selectCurrencies();
+    console.table(currencies);
   } catch (error) {
     console.error(error);
   }
@@ -11,4 +24,5 @@ const handleAddCurrency = async (params) => {
 
 module.exports = {
   handleAddCurrency,
+  handleListCurrencies,
 };

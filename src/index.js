@@ -4,7 +4,10 @@ const { program } = require('commander');
 const sqlite3 = require('sqlite3');
 
 // controllers
-const { handleAddCurrency } = require('./controllers/currency-controller');
+const {
+  handleAddCurrency,
+  handleListCurrencies,
+} = require('./controllers/currency-controller');
 
 // services
 const { initializeDatabase } = require('./services/migration-service');
@@ -25,10 +28,19 @@ program.command('init').action(async () => {
   }
 });
 
-program
+const currencies = program
   .command('currencies')
+  .description('Manage currencies');
+
+currencies
   .command('add')
+  .description('Add a currency')
   .requiredOption('-n, --name <name>', 'Currency name')
   .action(handleAddCurrency);
+
+currencies
+  .command('list')
+  .description('Shows a list of currencies')
+  .action(handleListCurrencies);
 
 program.parse(process.argv);

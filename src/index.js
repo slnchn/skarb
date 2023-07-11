@@ -7,6 +7,7 @@ const sqlite3 = require('sqlite3');
 const {
   handleAddCurrency,
   handleListCurrencies,
+  handleRmCurrency,
 } = require('./controllers/currency-controller');
 
 // services
@@ -37,6 +38,13 @@ currencies
   .description('Add a currency')
   .requiredOption('-n, --name <name>', 'Currency name')
   .action(handleAddCurrency);
+
+currencies
+  .command('rm')
+  .description('Remove a currency')
+  .requiredOption('-i, --id <id>', 'Currency id')
+  .option('-h, --hard', 'Hard deletion')
+  .action(handleRmCurrency);
 
 currencies
   .command('list')

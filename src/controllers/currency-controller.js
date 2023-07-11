@@ -1,6 +1,8 @@
 const {
   insertCurrency,
   selectCurrencies,
+  deleteCurrencyHard,
+  deleteCurrencySoft,
 } = require('../repositories/currency-repository');
 
 const handleAddCurrency = async (params) => {
@@ -8,6 +10,23 @@ const handleAddCurrency = async (params) => {
     const { name: currency } = params;
     const result = await insertCurrency({ currency });
     console.table(result);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const handleRmCurrency = async (params) => {
+  try {
+    const { id, hard } = params;
+
+    let deletedCurrency = {};
+    if (hard) {
+      deletedCurrency = await deleteCurrencyHard(id);
+    } else {
+      deletedCurrency = await deleteCurrencySoft(id);
+    }
+
+    console.table(deletedCurrency);
   } catch (error) {
     console.error(error);
   }
@@ -24,5 +43,6 @@ const handleListCurrencies = async () => {
 
 module.exports = {
   handleAddCurrency,
+  handleRmCurrency,
   handleListCurrencies,
 };

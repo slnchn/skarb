@@ -1,6 +1,6 @@
 const { insertCurrency } = require('../repositories/currency-repository');
 
-const handleAddCurrency = async (verb, params) => {
+const handleAddCurrency = async (params) => {
   try {
     const { name: currency } = params;
     await insertCurrency({ currency });

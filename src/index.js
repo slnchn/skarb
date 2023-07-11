@@ -3,8 +3,11 @@
 const { program } = require('commander');
 const sqlite3 = require('sqlite3');
 
+// controllers
+const { handleAddCurrency } = require('./controllers/currency-controller');
+
 // services
-const { initializeDatabase } = require('./migrations-service');
+const { initializeDatabase } = require('./services/migration-service');
 
 program.command('init').action(async () => {
   try {
@@ -21,5 +24,11 @@ program.command('init').action(async () => {
     console.error(error);
   }
 });
+
+program
+  .command('currencies')
+  .command('add')
+  .requiredOption('-n, --name <name>', 'Currency name')
+  .action(handleAddCurrency);
 
 program.parse(process.argv);

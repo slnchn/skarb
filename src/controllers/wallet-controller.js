@@ -1,6 +1,8 @@
 const {
   insertWallet,
   selectWallets,
+  deleteWalletHard,
+  deleteWalletSoft,
 } = require('../repositories/wallet-repository');
 
 const handleAddWallet = async (params) => {
@@ -8,6 +10,23 @@ const handleAddWallet = async (params) => {
     const { name: wallet, currencyId } = params;
     const result = await insertWallet({ wallet, currencyId });
     console.table(result);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const handleRmWallet = async (params) => {
+  try {
+    const { walletId, hard } = params;
+
+    let deletedWallet = {};
+    if (hard) {
+      deletedWallet = await deleteWalletHard(walletId);
+    } else {
+      deletedWallet = await deleteWalletSoft(walletId);
+    }
+
+    console.table(deletedWallet);
   } catch (error) {
     console.error(error);
   }
@@ -24,5 +43,6 @@ const handleListWallets = async () => {
 
 module.exports = {
   handleAddWallet,
+  handleRmWallet,
   handleListWallets,
 };

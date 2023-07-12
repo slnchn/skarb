@@ -12,6 +12,7 @@ const {
 const {
   handleAddWallet,
   handleListWallets,
+  handleRmWallet,
 } = require('./controllers/wallet-controller');
 
 // services
@@ -67,6 +68,13 @@ wallets
   .requiredOption('-n, --name <name>', 'Wallet name')
   .requiredOption('-c, --currency-id <currencyId>', 'Currency id')
   .action(handleAddWallet);
+
+wallets
+  .command('rm')
+  .description('Remove a wallet')
+  .requiredOption('-w, --walletId <id>', 'Wallet id')
+  .option('-h, --hard', 'Hard deletion')
+  .action(handleRmWallet);
 
 wallets
   .command('list')

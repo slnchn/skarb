@@ -34,6 +34,28 @@ const insertWallet = async ({ wallet, currencyId }) => {
   return latestInserted;
 };
 
+const selectWallets = async () => {
+  const db = await initDatabaseConnection();
+
+  const wallets = new Promise((resolve, reject) => {
+    db.all(
+      'SELECT wallets.id as wid, wallets.name as wname, currencies.name as cname, wallets.created_at as wcreated_at FROM wallets LEFT JOIN currencies ON currencies.id = wallets.currency_id',
+      (err, rows) => {
+        if (err) {
+          reject(err);
+        }
+
+        resolve(rows);
+      },
+    );
+  });
+
+  db.close();
+
+  return wallets;
+};
+
 module.exports = {
   insertWallet,
+  selectWallets,
 };

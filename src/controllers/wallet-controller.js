@@ -1,4 +1,7 @@
-const { insertWallet } = require('../repositories/wallet-repository');
+const {
+  insertWallet,
+  selectWallets,
+} = require('../repositories/wallet-repository');
 
 const handleAddWallet = async (params) => {
   try {
@@ -10,6 +13,16 @@ const handleAddWallet = async (params) => {
   }
 };
 
+const handleListWallets = async () => {
+  try {
+    const wallets = await selectWallets();
+    console.table(wallets);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
   handleAddWallet,
+  handleListWallets,
 };

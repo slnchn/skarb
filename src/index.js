@@ -17,6 +17,7 @@ const {
 const {
   handleAddWhistoryEntry,
   handleListWhistory,
+  handleRmWhistoryEntry,
 } = require('./controllers/whistory-controller');
 
 // services
@@ -97,6 +98,16 @@ whistory
   .requiredOption('-w, --walletId <walletId>', 'Wallet id')
   .requiredOption('-a, --amount <amount>', 'Amount')
   .action(handleAddWhistoryEntry);
+
+whistory
+  .command('rm')
+  .description('Remove a wallet history entry')
+  .requiredOption(
+    '-wh, --wallet-history-id <walletHistoryId>',
+    'Wallet history id',
+  )
+  .option('-h, --hard', 'Hard deletion')
+  .action(handleRmWhistoryEntry);
 
 whistory
   .command('list')

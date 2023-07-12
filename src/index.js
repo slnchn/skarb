@@ -9,6 +9,7 @@ const {
   handleListCurrencies,
   handleRmCurrency,
 } = require('./controllers/currency-controller');
+const { handleAddWallet } = require('./controllers/wallet-controller');
 
 // services
 const { initializeDatabase } = require('./services/migration-service');
@@ -28,6 +29,8 @@ program.command('init').action(async () => {
     console.error(error);
   }
 });
+
+// currencies
 
 const currencies = program
   .command('currencies')
@@ -50,5 +53,16 @@ currencies
   .command('list')
   .description('Shows a list of currencies')
   .action(handleListCurrencies);
+
+// wallets
+
+const wallets = program.command('wallets').description('Manage wallets');
+
+wallets
+  .command('add')
+  .description('Add a wallet')
+  .requiredOption('-n, --name <name>', 'Wallet name')
+  .requiredOption('-c, --currency-id <currencyId>', 'Currency id')
+  .action(handleAddWallet);
 
 program.parse(process.argv);

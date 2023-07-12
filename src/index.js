@@ -14,6 +14,7 @@ const {
   handleListWallets,
   handleRmWallet,
 } = require('./controllers/wallet-controller');
+const { addWhistoryEntry } = require('./controllers/whistory-controller');
 
 // services
 const { initializeDatabase } = require('./services/migration-service');
@@ -80,5 +81,18 @@ wallets
   .command('list')
   .description('Shows a list of wallets')
   .action(handleListWallets);
+
+// whistory
+
+const whistory = program
+  .command('whistory')
+  .description('Manage wallets history');
+
+whistory
+  .command('add')
+  .description('Add a wallet history entry')
+  .requiredOption('-w, --walletId <walletId>', 'Wallet id')
+  .requiredOption('-a, --amount <amount>', 'Amount')
+  .action(addWhistoryEntry);
 
 program.parse(process.argv);

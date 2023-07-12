@@ -34,6 +34,28 @@ const insertWhistory = async ({ walletId, amount }) => {
   return newWhistoryEntry;
 };
 
+const selectWalletsHistory = async () => {
+  const db = await initDatabaseConnection();
+
+  const whistory = await new Promise((resolve, reject) => {
+    db.all(
+      `SELECT * FROM wallets_history ORDER BY created_at DESC`,
+      (err, rows) => {
+        if (err) {
+          reject(err);
+        }
+
+        resolve(rows);
+      },
+    );
+  });
+
+  db.close();
+
+  return whistory;
+};
+
 module.exports = {
   insertWhistory,
+  selectWalletsHistory,
 };

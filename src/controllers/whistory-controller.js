@@ -1,6 +1,9 @@
-const { insertWhistory } = require('../repositories/whistory-repository');
+const {
+  insertWhistory,
+  selectWalletsHistory,
+} = require('../repositories/whistory-repository');
 
-const addWhistoryEntry = async (params) => {
+const handleAddWhistoryEntry = async (params) => {
   try {
     const { walletId, amount } = params;
     const result = await insertWhistory({ walletId, amount });
@@ -10,6 +13,16 @@ const addWhistoryEntry = async (params) => {
   }
 };
 
+const handleListWhistory = async () => {
+  try {
+    const result = await selectWalletsHistory();
+    console.table(result);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
-  addWhistoryEntry,
+  handleAddWhistoryEntry,
+  handleListWhistory,
 };

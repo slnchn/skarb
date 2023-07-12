@@ -34,6 +34,75 @@ const insertWhistory = async ({ walletId, amount }) => {
   return newWhistoryEntry;
 };
 
+const deleteWalletHistorySoft = async (id) => {
+  const db = await initDatabaseConnection();
+
+  await new Promise((resolve, reject) => {
+    db.run(
+      `UPDATE wallets_history SET deleted_at = DATETIME('now') WHERE id = ${id}`,
+      (err) => {
+        if (err) {
+          reject(err);
+        }
+
+        console.info(`Wallet history ${id} soft-deleted`);
+
+        resolve({});
+      },
+    );
+  });
+
+  const updatedWalletHistory = await new Promise((resolve, reject) => {
+    db.all(
+      `SELECT * FROM wallets_history WHERE id = ${id} LIMIT 1`,
+      (err, rows) => {
+        if (err) {
+          reject(err);
+        }
+
+        resolve(rows);
+      },
+    );
+  });
+
+  db.close();
+
+  return updatedWalletHistory;
+};
+
+const deleteWalletHistoryHard = async (id) => {
+  const db = await initDatabaseConnection();
+
+  const walletHistoryToDelete = await new Promise((resolve, reject) => {
+    db.all(
+      `SELECT * FROM wallets_history WHERE id = ${id} LIMIT 1`,
+      (err, rows) => {
+        if (err) {
+          reject(err);
+        }
+
+        resolve(rows);
+      },
+    );
+  });
+
+  await new Promise((resolve, reject) => {
+    db.run(`DELETE FROM wallets_history WHERE id = ${id}`, (err) => {
+      if (err) {
+        reject(err);
+      }
+
+      console.info(`Wallet history ${id} hard-deleted`);
+
+      resolve({});
+    });
+  });
+
+  db.close();
+
+  return walletHistoryToDelete;
+};
+
 const selectWalletsHistory = async () => {
   const db = await initDatabaseConnection();
 
@@ -57,5 +126,7 @@ const selectWalletsHistory = async () => {
 
 module.exports = {
   insertWhistory,
+  deleteWalletHistorySoft,
+  deleteWalletHistoryHard,
   selectWalletsHistory,
 };

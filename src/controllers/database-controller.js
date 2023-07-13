@@ -1,0 +1,24 @@
+const {
+  createDatabase,
+  migrateDatabase,
+} = require('../repositories/database-repository');
+const handleInit = async () => {
+  try {
+    await createDatabase();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const handleMigrate = async () => {
+  try {
+    await migrateDatabase();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+module.exports = {
+  handleInit,
+  handleMigrate,
+};

@@ -1,9 +1,12 @@
 #! /usr/bin/env node
 
 const { program } = require('commander');
-const sqlite3 = require('sqlite3');
 
 // controllers
+const {
+  handleInit,
+  handleMigrate,
+} = require('./controllers/database-controller');
 const {
   handleAddCurrency,
   handleListCurrencies,
@@ -20,24 +23,9 @@ const {
   handleRmWhistoryEntry,
 } = require('./controllers/whistory-controller');
 
-// services
-const { initializeDatabase } = require('./services/migration-service');
+program.command('init').action(handleInit);
 
-program.command('init').action(async () => {
-  try {
-    const db = new sqlite3.Database('./cream.sqlite3', async (err) => {
-      if (err) {
-        console.error(err.message);
-      }
-
-      await initializeDatabase(db);
-
-      db.close();
-    });
-  } catch (error) {
-    console.error(error);
-  }
-});
+program.command('migrate').action(handleMigrate);
 
 // currencies
 

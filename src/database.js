@@ -13,6 +13,28 @@ const checkIfDatabaseExists = async () => {
   }
 };
 
+const runSQL = (db, sql) =>
+  new Promise((resolve, reject) => {
+    db.run(sql, (err, ...rest) => {
+      if (err) {
+        reject(err);
+      }
+
+      resolve(...rest);
+    });
+  });
+
+const execSQL = (db, sql) =>
+  new Promise((resolve, reject) => {
+    db.exec(sql, (err, ...rest) => {
+      if (err) {
+        reject(err);
+      }
+
+      resolve(...rest);
+    });
+  });
+
 const initDatabaseConnection = async () => {
   try {
     databaseConnection = new Promise((resolve, reject) => {
@@ -21,6 +43,7 @@ const initDatabaseConnection = async () => {
           reject(err);
         }
 
+        console.log(db);
         resolve(db);
       });
     });
@@ -34,4 +57,6 @@ const initDatabaseConnection = async () => {
 module.exports = {
   checkIfDatabaseExists,
   initDatabaseConnection,
+  runSQL,
+  execSQL,
 };

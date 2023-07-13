@@ -3,7 +3,10 @@
 const { program } = require('commander');
 
 // controllers
-const { handleInit } = require('./controllers/database-controller');
+const {
+  handleInit,
+  handleMigrate,
+} = require('./controllers/database-controller');
 const {
   handleAddCurrency,
   handleListCurrencies,
@@ -21,6 +24,8 @@ const {
 } = require('./controllers/whistory-controller');
 
 program.command('init').action(handleInit);
+
+program.command('migrate').action(handleMigrate);
 
 // currencies
 

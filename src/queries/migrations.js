@@ -39,8 +39,20 @@ const createWalletsTablesSQL = `
 `;
 
 const migrationsMap = {
-  1: createMigrationsTableSQL,
-  2: createWalletsTablesSQL,
+  1: {
+    title: 'create_migrations_table',
+    sql: createMigrationsTableSQL,
+  },
+
+  2: {
+    title: 'create_wallets_tables',
+    sql: createWalletsTablesSQL,
+  },
+
+  3: {
+    title: 'add_currencies',
+    sql: `select * from currencies;`,
+  },
 };
 
 module.exports = {

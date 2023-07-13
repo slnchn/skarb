@@ -35,6 +35,17 @@ const execSQL = (db, sql) =>
     });
   });
 
+const allSQL = (db, sql) =>
+  new Promise((resolve, reject) => {
+    db.all(sql, (err, ...rest) => {
+      if (err) {
+        reject(err);
+      }
+
+      resolve(...rest);
+    });
+  });
+
 const initDatabaseConnection = async () => {
   try {
     databaseConnection = new Promise((resolve, reject) => {
@@ -59,4 +70,5 @@ module.exports = {
   initDatabaseConnection,
   runSQL,
   execSQL,
+  allSQL,
 };

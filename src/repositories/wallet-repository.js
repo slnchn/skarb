@@ -1,33 +1,17 @@
-const { initDatabaseConnection } = require('../database');
+const { initDatabaseConnection, runSQL, allSQL } = require('../database');
 
 const insertWallet = async ({ wallet, currencyId }) => {
   const db = await initDatabaseConnection();
 
-  await new Promise((resolve, reject) => {
-    db.run(
-      `INSERT INTO wallets (name, currency_id) VALUES ('${wallet}', ${currencyId})`,
-      (err) => {
-        if (err) {
-          reject(err);
-        }
+  await runSQL(
+    db,
+    `INSERT INTO wallets (w_name, w_currencyId) VALUES ("${wallet}", ${currencyId})`,
+  );
 
-        resolve({});
-      },
-    );
-  });
-
-  const latestInserted = new Promise((resolve, reject) => {
-    db.all(
-      'SELECT * FROM wallets ORDER BY created_at DESC LIMIT 1',
-      (err, rows) => {
-        if (err) {
-          reject(err);
-        }
-
-        resolve(rows);
-      },
-    );
-  });
+  const latestInserted = await allSQL(
+    db,
+    `SELECT * FROM wallets ORDER BY w_createdAt DESC LIMIT 1`,
+  );
 
   db.close();
 
@@ -37,30 +21,15 @@ const insertWallet = async ({ wallet, currencyId }) => {
 const deleteWalletSoft = async (id) => {
   const db = await initDatabaseConnection();
 
-  await new Promise((resolve, reject) => {
-    db.run(
-      `UPDATE wallets SET deleted_at = DATETIME('now') WHERE id = ${id}`,
-      (err) => {
-        if (err) {
-          reject(err);
-        }
+  await runSQL(
+    db,
+    `UPDATE wallets SET w_deletedAt = DATETIME('now') WHERE w_id = ${id}`,
+  );
 
-        console.info(`Wallet ${id} soft-deleted`);
-
-        resolve({});
-      },
-    );
-  });
-
-  const updatedWallet = await new Promise((resolve, reject) => {
-    db.all(`SELECT * FROM wallets WHERE id = ${id} LIMIT 1`, (err, rows) => {
-      if (err) {
-        reject(err);
-      }
-
-      resolve(rows);
-    });
-  });
+  const updatedWallet = await allSQL(
+    db,
+    `SELECT * FROM wallets WHERE w_id = ${id}`,
+  );
 
   db.close();
 
@@ -70,27 +39,12 @@ const deleteWalletSoft = async (id) => {
 const deleteWalletHard = async (id) => {
   const db = await initDatabaseConnection();
 
-  const walletToDelete = await new Promise((resolve, reject) => {
-    db.all(`SELECT * FROM wallets WHERE id = ${id} LIMIT 1`, (err, rows) => {
-      if (err) {
-        reject(err);
-      }
+  const walletToDelete = await allSQL(
+    db,
+    `SELECT * FROM wallets WHERE w_id = ${id}`,
+  );
 
-      resolve(rows);
-    });
-  });
-
-  await new Promise((resolve, reject) => {
-    db.run(`DELETE FROM wallets WHERE id = ${id}`, (err) => {
-      if (err) {
-        reject(err);
-      }
-
-      console.info(`Wallet ${id} hard-deleted`);
-
-      resolve({});
-    });
-  });
+  await runSQL(db, `DELETE FROM wallets WHERE w_id = ${id}`);
 
   db.close();
 
@@ -100,18 +54,10 @@ const deleteWalletHard = async (id) => {
 const selectWallets = async () => {
   const db = await initDatabaseConnection();
 
-  const wallets = new Promise((resolve, reject) => {
-    db.all(
-      'SELECT wallets.id as wid, wallets.name as wname, currencies.name as cname, wallets.created_at as wcreated_at, wallets.updated_at as wupdated_at, wallets.deleted_at as wdeleted_at FROM wallets LEFT JOIN currencies ON currencies.id = wallets.currency_id',
-      (err, rows) => {
-        if (err) {
-          reject(err);
-        }
-
-        resolve(rows);
-      },
-    );
-  });
+  const wallets = await allSQL(
+    db,
+    `SELECT * FROM wallets LEFT JOIN currencies ON currencies.c_id = wallets.w_currencyId ORDER BY w_createdAt DESC`,
+  );
 
   db.close();
 

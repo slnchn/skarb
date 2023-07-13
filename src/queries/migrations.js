@@ -1,41 +1,41 @@
 const createMigrationsTableSQL = `
   create table migrations (
-    id integer primary key autoincrement,
-    title integer unique not null,
-    created_at datetime default (datetime('now', 'utc'))
+    m_id integer primary key autoincrement,
+    m_title integer unique not null,
+    m_createdAt datetime default (datetime('now', 'utc'))
   );
 
-  insert into migrations (title) values (1);
+  insert into migrations (m_title) values (1);
 `;
 
 const createWalletsTablesSQL = `
   create table currencies (
-      id integer primary key autoincrement,
-      name varchar(255) not null,
-      created_at datetime default (datetime('now', 'utc')),
-      updated_at datetime default (datetime('now', 'utc')),
-      deleted_at datetime default null
+      c_id integer primary key autoincrement,
+      c_name varchar(255) not null,
+      c_createdAt datetime default (datetime('now', 'utc')),
+      c_updatedAt datetime default (datetime('now', 'utc')),
+      c_deletedAt datetime default null
   );
 
   create table wallets (
-      id integer primary key AUTOINCREMENT,
-      name varchar(255) not null,
-      currency_id integer not null,
-      created_at datetime default (datetime('now', 'utc')),
-      updated_at datetime default (datetime('now', 'utc')),
-      deleted_at datetime default null
+      w_id integer primary key AUTOINCREMENT,
+      w_name varchar(255) not null,
+      w_currencyId integer not null,
+      w_createdAt datetime default (datetime('now', 'utc')),
+      w_updatedAt datetime default (datetime('now', 'utc')),
+      w_deletedAt datetime default null
   );
 
   create table wallets_history (
-      id integer primary key AUTOINCREMENT,
-      wallet_id integer not null,
-      money_amount numeric not null,
-      created_at datetime default (datetime('now', 'utc')),
-      updated_at datetime default (datetime('now', 'utc')),
-      deleted_at datetime default null
+      wh_id integer primary key AUTOINCREMENT,
+      wh_walletId integer not null,
+      wh_moneyAmount numeric not null,
+      wh_createdAt datetime default (datetime('now', 'utc')),
+      wh_updatedAt datetime default (datetime('now', 'utc')),
+      wh_deletedAt datetime default null
   );
 
-  insert into migrations (title) values (2);
+  insert into migrations (m_title) values (2);
 `;
 
 const migrationsMap = {

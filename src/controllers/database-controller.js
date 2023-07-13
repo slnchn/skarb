@@ -1,7 +1,8 @@
 const {
   createDatabase,
   migrateDatabase,
-} = require('../repositories/database-repository');
+} = require('../services/database-service');
+
 const handleInit = async () => {
   try {
     await createDatabase();

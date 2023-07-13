@@ -48,11 +48,6 @@ const migrationsMap = {
     title: 'create_wallets_tables',
     sql: createWalletsTablesSQL,
   },
-
-  3: {
-    title: 'add_currencies',
-    sql: `select * from currencies;`,
-  },
 };
 
 module.exports = {

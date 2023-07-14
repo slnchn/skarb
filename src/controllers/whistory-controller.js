@@ -8,8 +8,8 @@ const { formatWhistoryFromDb } = require('../formatters/whistory-formatter');
 
 const handleAddWhistoryEntry = async (params) => {
   try {
-    const { walletId, amount } = params;
-    const result = await insertWhistory({ walletId, amount });
+    const { walletId, amount, date } = params;
+    const result = await insertWhistory({ walletId, amount, date });
     console.table(result.map(formatWhistoryFromDb));
   } catch (error) {
     console.error(error);

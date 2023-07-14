@@ -1,12 +1,19 @@
 const { initDatabaseConnection, runSQL, allSQL } = require('../database');
 
-const insertWhistory = async ({ walletId, amount }) => {
+const insertWhistory = async ({ walletId, amount, date }) => {
   const db = await initDatabaseConnection();
 
-  await runSQL(
-    db,
-    `INSERT INTO wallets_history (wh_walletId, wh_moneyAmount) VALUES (${walletId}, ${amount})`,
-  );
+  if (date) {
+    await runSQL(
+      db,
+      `INSERT INTO wallets_history (wh_walletId, wh_moneyAmount, wh_date) VALUES (${walletId}, ${amount}, '${date}')`,
+    );
+  } else {
+    await runSQL(
+      db,
+      `INSERT INTO wallets_history (wh_walletId, wh_moneyAmount) VALUES (${walletId}, ${amount})`,
+    );
+  }
 
   const newWhistoryEntry = allSQL(
     db,
@@ -56,7 +63,7 @@ const selectWalletsHistory = async () => {
 
   const whistory = await allSQL(
     db,
-    `SELECT * FROM wallets_history ORDER BY wh_createdAt DESC`,
+    `SELECT * FROM wallets_history ORDER BY wh_date DESC`,
   );
 
   db.close();

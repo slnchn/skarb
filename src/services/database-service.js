@@ -34,11 +34,11 @@ const migrateDatabase = async () => {
     const db = await initDatabaseConnection();
 
     Object.entries(migrationsMap).map(async ([key, migration]) => {
-      if (key <= latestMigration.title) {
+      if (key <= latestMigration.m_title) {
         return;
       }
 
-      console.info(`Running migration ${key}--${migration.title}...`);
+      console.info(`Running migration ${key}--${migration.m_title}...`);
 
       await execSQL(db, migration.sql);
     });

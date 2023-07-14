@@ -4,12 +4,13 @@ const {
   deleteWalletHard,
   deleteWalletSoft,
 } = require('../repositories/wallet-repository');
+const { formatWalletFromDb } = require('../formatters/wallets-formatter');
 
 const handleAddWallet = async (params) => {
   try {
     const { name: wallet, currencyId } = params;
     const result = await insertWallet({ wallet, currencyId });
-    console.table(result);
+    console.table(result.map(formatWalletFromDb));
   } catch (error) {
     console.error(error);
   }
@@ -26,7 +27,7 @@ const handleRmWallet = async (params) => {
       deletedWallet = await deleteWalletSoft(walletId);
     }
 
-    console.table(deletedWallet);
+    console.table(deletedWallet.map(formatWalletFromDb));
   } catch (error) {
     console.error(error);
   }
@@ -35,7 +36,7 @@ const handleRmWallet = async (params) => {
 const handleListWallets = async () => {
   try {
     const wallets = await selectWallets();
-    console.table(wallets);
+    console.table(wallets.map(formatWalletFromDb));
   } catch (error) {
     console.error(error);
   }

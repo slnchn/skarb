@@ -85,6 +85,7 @@ whistory
   .description('Add a wallet history entry')
   .requiredOption('-w, --walletId <walletId>', 'Wallet id')
   .requiredOption('-a, --amount <amount>', 'Amount')
+  .option('-d, --date <date>', 'Date')
   .action(handleAddWhistoryEntry);
 
 whistory

@@ -30,6 +30,7 @@ const createWalletsTablesSQL = `
       wh_id integer primary key AUTOINCREMENT,
       wh_walletId integer not null,
       wh_moneyAmount numeric not null,
+      wh_date datetime default (datetime('now', 'utc')),
       wh_createdAt datetime default (datetime('now', 'utc')),
       wh_updatedAt datetime default (datetime('now', 'utc')),
       wh_deletedAt datetime default null

@@ -7,6 +7,7 @@
     "cream": "./src/index.js"
   },
   "scripts": {
+    "start": "node ./src/index.js",
     "lint": "eslint . --ext .js"
   },
   "keywords": [],

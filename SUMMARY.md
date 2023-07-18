@@ -6,3 +6,5 @@
 * [Releases](docs/releases/README.md)
   * [1.0.0](docs/releases/1.0.0/README.md)
     * [Basic Functionality](docs/releases/1.0.0/basic-functionality.md)
+  * [1.1.0](docs/releases/1.1.0/README.md)
+    * [Wallets History Representativity](docs/releases/1.1.0/wallets-history-representativity.md)

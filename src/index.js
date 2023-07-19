@@ -101,6 +101,7 @@ whistory
 whistory
   .command('list')
   .description('Shows a list of wallets history')
+  .option('-w, --walletId <walletId>', 'Wallet id')
   .action(handleListWhistory);
 
 program.parse(process.argv);

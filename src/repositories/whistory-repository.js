@@ -71,9 +71,23 @@ const selectWalletsHistory = async () => {
   return whistory;
 };
 
+const selectWalletHistory = async (walletId) => {
+  const db = await initDatabaseConnection();
+
+  const whistory = await allSQL(
+    db,
+    `SELECT * FROM wallets_history INNER JOIN wallets on wallets.w_id = wallets_history.wh_walletId WHERE wh_walletId = ${walletId} ORDER BY wh_date DESC`,
+  );
+
+  db.close();
+
+  return whistory;
+};
+
 module.exports = {
   insertWhistory,
   deleteWalletHistorySoft,
   deleteWalletHistoryHard,
   selectWalletsHistory,
+  selectWalletHistory,
 };

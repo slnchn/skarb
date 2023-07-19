@@ -63,7 +63,7 @@ const selectWalletsHistory = async () => {
 
   const whistory = await allSQL(
     db,
-    `SELECT * FROM wallets_history ORDER BY wh_date DESC`,
+    `SELECT * FROM wallets_history INNER JOIN wallets on wallets.w_id = wallets_history.wh_walletId ORDER BY wh_date DESC`,
   );
 
   db.close();

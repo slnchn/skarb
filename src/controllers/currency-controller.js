@@ -18,13 +18,13 @@ const handleAddCurrency = async (params) => {
 
 const handleRmCurrency = async (params) => {
   try {
-    const { id, hard } = params;
+    const { currencyId, hard } = params;
 
     let deletedCurrency = {};
     if (hard) {
-      deletedCurrency = await deleteCurrencyHard(id);
+      deletedCurrency = await deleteCurrencyHard(currencyId);
     } else {
-      deletedCurrency = await deleteCurrencySoft(id);
+      deletedCurrency = await deleteCurrencySoft(currencyId);
     }
 
     console.table(deletedCurrency.map(formatCurrencyFromDb));

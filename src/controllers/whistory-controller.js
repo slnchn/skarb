@@ -3,6 +3,7 @@ const {
   selectWalletsHistory,
   deleteWalletHistorySoft,
   deleteWalletHistoryHard,
+  selectWalletHistory,
 } = require('../repositories/whistory-repository');
 const { formatWhistoryFromDb } = require('../formatters/whistory-formatter');
 
@@ -32,9 +33,17 @@ const handleRmWhistoryEntry = async (params) => {
   }
 };
 
-const handleListWhistory = async () => {
+const handleListWhistory = async (params) => {
   try {
-    const result = await selectWalletsHistory();
+    const { walletId } = params;
+
+    let result = [];
+    if (walletId) {
+      result = await selectWalletHistory(walletId);
+    } else {
+      result = await selectWalletsHistory();
+    }
+
     console.table(result.map(formatWhistoryFromDb));
   } catch (error) {
     console.error(error);

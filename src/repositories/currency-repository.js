@@ -52,9 +52,22 @@ const selectCurrencies = async () => {
   return currencies;
 };
 
+const selectCurrencyById = async (id) => {
+  const db = await initDatabaseConnection();
+
+  const currency = await allSQL(
+    db,
+    `SELECT * FROM currencies WHERE c_id = ${id} LIMIT 1`,
+  );
+
+  db.close();
+  return currency;
+};
+
 module.exports = {
   insertCurrency,
   deleteCurrencySoft,
   deleteCurrencyHard,
   selectCurrencies,
+  selectCurrencyById,
 };

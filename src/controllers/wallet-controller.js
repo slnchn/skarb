@@ -4,13 +4,22 @@ const {
   deleteWalletHard,
   deleteWalletSoft,
 } = require('../repositories/wallet-repository');
+const { selectCurrencyById } = require('../repositories/currency-repository');
 const { formatWalletFromDb } = require('../formatters/wallets-formatter');
 
 const handleAddWallet = async (params) => {
   try {
     const { name: wallet, currencyId } = params;
-    const result = await insertWallet({ wallet, currencyId });
-    console.table(result.map(formatWalletFromDb));
+
+    const [currency] = await selectCurrencyById(currencyId);
+    console.log(currency);
+    if (currency) {
+      // create wallet only if the referenced currency already exists
+      const result = await insertWallet({ wallet, currencyId });
+      console.table(result.map(formatWalletFromDb));
+    } else {
+      console.error(`Currency with id ${currencyId} not found!`);
+    }
   } catch (error) {
     console.error(error);
   }

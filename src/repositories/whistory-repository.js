@@ -71,6 +71,19 @@ const selectWalletsHistory = async () => {
   return whistory;
 };
 
+const selectWalletsHistoryByWalletId = async (walletId) => {
+  const db = await initDatabaseConnection();
+
+  const whistory = await allSQL(
+    db,
+    `SELECT * FROM wallets_history WHERE wh_walletId = ${walletId}`,
+  );
+
+  db.close();
+
+  return whistory;
+};
+
 const selectWalletHistory = async (walletId) => {
   const db = await initDatabaseConnection();
 
@@ -89,5 +102,6 @@ module.exports = {
   deleteWalletHistorySoft,
   deleteWalletHistoryHard,
   selectWalletsHistory,
+  selectWalletsHistoryByWalletId,
   selectWalletHistory,
 };

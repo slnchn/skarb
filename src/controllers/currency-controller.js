@@ -3,6 +3,7 @@ const {
   selectCurrencies,
   deleteCurrencyHard,
   deleteCurrencySoft,
+  selectCurrenciesByNameCaseInsensitive,
 } = require('../repositories/currency-repository');
 const {
   selectWalletsByCurrencyId,
@@ -13,8 +14,18 @@ const { formatWalletFromDb } = require('../formatters/wallets-formatter');
 const handleAddCurrency = async (params) => {
   try {
     const { name: currency } = params;
-    const result = await insertCurrency({ currency });
-    console.table(result.map(formatCurrencyFromDb));
+
+    const currenciesWithSameName = await selectCurrenciesByNameCaseInsensitive(
+      currency,
+    );
+
+    if (!currenciesWithSameName.length) {
+      const result = await insertCurrency({ currency });
+      console.table(result.map(formatCurrencyFromDb));
+    } else {
+      console.error('Currency name is not unique. Please choose another one.');
+      console.table(currenciesWithSameName.map(formatCurrencyFromDb));
+    }
   } catch (error) {
     console.error(error);
   }

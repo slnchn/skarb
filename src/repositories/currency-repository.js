@@ -64,10 +64,23 @@ const selectCurrencyById = async (id) => {
   return currency;
 };
 
+const selectCurrenciesByNameCaseInsensitive = async (name) => {
+  const db = await initDatabaseConnection();
+
+  const currency = await allSQL(
+    db,
+    `SELECT * FROM currencies WHERE LOWER(c_name) = LOWER("${name}")`,
+  );
+
+  db.close();
+  return currency;
+};
+
 module.exports = {
   insertCurrency,
   deleteCurrencySoft,
   deleteCurrencyHard,
   selectCurrencies,
   selectCurrencyById,
+  selectCurrenciesByNameCaseInsensitive,
 };

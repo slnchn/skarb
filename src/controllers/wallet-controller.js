@@ -5,6 +5,9 @@ const {
   deleteWalletSoft,
 } = require('../repositories/wallet-repository');
 const { selectCurrencyById } = require('../repositories/currency-repository');
+const {
+  selectWalletsHistoryByWalletId,
+} = require('../repositories/whistory-repository');
 const { formatWalletFromDb } = require('../formatters/wallets-formatter');
 
 const handleAddWallet = async (params) => {
@@ -29,14 +32,23 @@ const handleRmWallet = async (params) => {
   try {
     const { walletId, hard } = params;
 
-    let deletedWallet = {};
-    if (hard) {
-      deletedWallet = await deleteWalletHard(walletId);
-    } else {
-      deletedWallet = await deleteWalletSoft(walletId);
-    }
+    const relatedWhistoryEntries = await selectWalletsHistoryByWalletId(
+      walletId,
+    );
 
-    console.table(deletedWallet.map(formatWalletFromDb));
+    if (!relatedWhistoryEntries.length) {
+      let deletedWallet = {};
+      if (hard) {
+        deletedWallet = await deleteWalletHard(walletId);
+      } else {
+        deletedWallet = await deleteWalletSoft(walletId);
+      }
+
+      console.table(deletedWallet.map(formatWalletFromDb));
+    } else {
+      console.error(`Wallet with id ${walletId} has related whistory entries!`);
+      console.table(relatedWhistoryEntries);
+    }
   } catch (error) {
     console.error(error);
   }

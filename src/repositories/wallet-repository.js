@@ -90,6 +90,19 @@ const selectWalletsByCurrencyId = async (currencyId) => {
   return wallets;
 };
 
+const selectWalletsByNameCaseInsensitive = async (name) => {
+  const db = await initDatabaseConnection();
+
+  const wallets = await allSQL(
+    db,
+    `SELECT * FROM wallets WHERE LOWER(w_name) = LOWER("${name}")`,
+  );
+
+  db.close();
+
+  return wallets;
+};
+
 module.exports = {
   insertWallet,
   deleteWalletSoft,
@@ -97,4 +110,5 @@ module.exports = {
   selectWallets,
   selectWalletById,
   selectWalletsByCurrencyId,
+  selectWalletsByNameCaseInsensitive,
 };

@@ -3,6 +3,7 @@ const {
   selectWallets,
   deleteWalletHard,
   deleteWalletSoft,
+  selectWalletsByNameCaseInsensitive,
 } = require('../repositories/wallet-repository');
 const { selectCurrencyById } = require('../repositories/currency-repository');
 const {
@@ -14,14 +15,23 @@ const handleAddWallet = async (params) => {
   try {
     const { name: wallet, currencyId } = params;
 
-    const [currency] = await selectCurrencyById(currencyId);
-    console.log(currency);
-    if (currency) {
-      // create wallet only if the referenced currency already exists
-      const result = await insertWallet({ wallet, currencyId });
-      console.table(result.map(formatWalletFromDb));
+    const walletsWithSameName = await selectWalletsByNameCaseInsensitive(
+      wallet,
+    );
+
+    if (!walletsWithSameName.length) {
+      const [currency] = await selectCurrencyById(currencyId);
+      console.log(currency);
+      if (currency) {
+        // create wallet only if the referenced currency already exists
+        const result = await insertWallet({ wallet, currencyId });
+        console.table(result.map(formatWalletFromDb));
+      } else {
+        console.error(`Currency with id ${currencyId} not found!`);
+      }
     } else {
-      console.error(`Currency with id ${currencyId} not found!`);
+      console.error('Wallet name is not unique. Please choose another one.');
+      console.table(walletsWithSameName.map(formatWalletFromDb));
     }
   } catch (error) {
     console.error(error);

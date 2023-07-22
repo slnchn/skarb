@@ -77,10 +77,24 @@ const selectWalletById = async (id) => {
   return wallet;
 };
 
+const selectWalletsByCurrencyId = async (currencyId) => {
+  const db = await initDatabaseConnection();
+
+  const wallets = await allSQL(
+    db,
+    `SELECT * FROM wallets WHERE w_currencyId = ${currencyId}`,
+  );
+
+  db.close();
+
+  return wallets;
+};
+
 module.exports = {
   insertWallet,
   deleteWalletSoft,
   deleteWalletHard,
   selectWallets,
   selectWalletById,
+  selectWalletsByCurrencyId,
 };

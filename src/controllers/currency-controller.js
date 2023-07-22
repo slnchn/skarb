@@ -4,7 +4,11 @@ const {
   deleteCurrencyHard,
   deleteCurrencySoft,
 } = require('../repositories/currency-repository');
+const {
+  selectWalletsByCurrencyId,
+} = require('../repositories/wallet-repository');
 const { formatCurrencyFromDb } = require('../formatters/currency-formatter');
+const { formatWalletFromDb } = require('../formatters/wallets-formatter');
 
 const handleAddCurrency = async (params) => {
   try {
@@ -20,14 +24,23 @@ const handleRmCurrency = async (params) => {
   try {
     const { currencyId, hard } = params;
 
-    let deletedCurrency = {};
-    if (hard) {
-      deletedCurrency = await deleteCurrencyHard(currencyId);
-    } else {
-      deletedCurrency = await deleteCurrencySoft(currencyId);
-    }
+    const relatedWallets = await selectWalletsByCurrencyId(currencyId);
+    if (!relatedWallets.length) {
+      let deletedCurrency = {};
+      if (hard) {
+        deletedCurrency = await deleteCurrencyHard(currencyId);
+      } else {
+        deletedCurrency = await deleteCurrencySoft(currencyId);
+      }
 
-    console.table(deletedCurrency.map(formatCurrencyFromDb));
+      console.table(deletedCurrency.map(formatCurrencyFromDb));
+    } else {
+      console.error(
+        'There are wallets related to this currency. Please remove them first.',
+      );
+
+      console.table(relatedWallets.map(formatWalletFromDb));
+    }
   } catch (error) {
     console.error(error);
   }

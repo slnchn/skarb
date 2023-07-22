@@ -64,9 +64,23 @@ const selectWallets = async () => {
   return wallets;
 };
 
+const selectWalletById = async (id) => {
+  const db = await initDatabaseConnection();
+
+  const wallet = await allSQL(
+    db,
+    `SELECT * FROM wallets WHERE w_id = ${id} LIMIT 1`,
+  );
+
+  db.close();
+
+  return wallet;
+};
+
 module.exports = {
   insertWallet,
   deleteWalletSoft,
   deleteWalletHard,
   selectWallets,
+  selectWalletById,
 };

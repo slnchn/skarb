@@ -5,13 +5,20 @@ const {
   deleteWalletHistoryHard,
   selectWalletHistory,
 } = require('../repositories/whistory-repository');
+const { selectWalletById } = require('../repositories/wallet-repository');
 const { formatWhistoryFromDb } = require('../formatters/whistory-formatter');
 
 const handleAddWhistoryEntry = async (params) => {
   try {
     const { walletId, amount, date } = params;
-    const result = await insertWhistory({ walletId, amount, date });
-    console.table(result.map(formatWhistoryFromDb));
+
+    const [wallet] = await selectWalletById(walletId);
+    if (wallet) {
+      const result = await insertWhistory({ walletId, amount, date });
+      console.table(result.map(formatWhistoryFromDb));
+    } else {
+      console.log(`Wallet with id ${walletId} does not exist`);
+    }
   } catch (error) {
     console.error(error);
   }

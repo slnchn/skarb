@@ -3,14 +3,29 @@ const {
   selectCurrencies,
   deleteCurrencyHard,
   deleteCurrencySoft,
+  selectCurrenciesByNameCaseInsensitive,
 } = require('../repositories/currency-repository');
+const {
+  selectWalletsByCurrencyId,
+} = require('../repositories/wallet-repository');
 const { formatCurrencyFromDb } = require('../formatters/currency-formatter');
+const { formatWalletFromDb } = require('../formatters/wallets-formatter');
 
 const handleAddCurrency = async (params) => {
   try {
     const { name: currency } = params;
-    const result = await insertCurrency({ currency });
-    console.table(result.map(formatCurrencyFromDb));
+
+    const currenciesWithSameName = await selectCurrenciesByNameCaseInsensitive(
+      currency,
+    );
+
+    if (!currenciesWithSameName.length) {
+      const result = await insertCurrency({ currency });
+      console.table(result.map(formatCurrencyFromDb));
+    } else {
+      console.error('Currency name is not unique. Please choose another one.');
+      console.table(currenciesWithSameName.map(formatCurrencyFromDb));
+    }
   } catch (error) {
     console.error(error);
   }
@@ -18,16 +33,25 @@ const handleAddCurrency = async (params) => {
 
 const handleRmCurrency = async (params) => {
   try {
-    const { id, hard } = params;
+    const { currencyId, hard } = params;
 
-    let deletedCurrency = {};
-    if (hard) {
-      deletedCurrency = await deleteCurrencyHard(id);
+    const relatedWallets = await selectWalletsByCurrencyId(currencyId);
+    if (!relatedWallets.length) {
+      let deletedCurrency = {};
+      if (hard) {
+        deletedCurrency = await deleteCurrencyHard(currencyId);
+      } else {
+        deletedCurrency = await deleteCurrencySoft(currencyId);
+      }
+
+      console.table(deletedCurrency.map(formatCurrencyFromDb));
     } else {
-      deletedCurrency = await deleteCurrencySoft(id);
-    }
+      console.error(
+        'There are wallets related to this currency. Please remove them first.',
+      );
 
-    console.table(deletedCurrency.map(formatCurrencyFromDb));
+      console.table(relatedWallets.map(formatWalletFromDb));
+    }
   } catch (error) {
     console.error(error);
   }

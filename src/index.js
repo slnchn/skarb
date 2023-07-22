@@ -42,7 +42,7 @@ currencies
 currencies
   .command('rm')
   .description('Remove a currency')
-  .requiredOption('-i, --id <id>', 'Currency id')
+  .requiredOption('-c, --currency-id <currencyId>', 'Currency id')
   .option('-h, --hard', 'Hard deletion')
   .action(handleRmCurrency);
 
@@ -101,6 +101,7 @@ whistory
 whistory
   .command('list')
   .description('Shows a list of wallets history')
+  .option('-w, --walletId <walletId>', 'Wallet id')
   .action(handleListWhistory);
 
 program.parse(process.argv);

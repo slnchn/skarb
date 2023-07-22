@@ -63,7 +63,33 @@ const selectWalletsHistory = async () => {
 
   const whistory = await allSQL(
     db,
-    `SELECT * FROM wallets_history ORDER BY wh_date DESC`,
+    `SELECT * FROM wallets_history INNER JOIN wallets on wallets.w_id = wallets_history.wh_walletId ORDER BY wh_date DESC`,
+  );
+
+  db.close();
+
+  return whistory;
+};
+
+const selectWalletsHistoryByWalletId = async (walletId) => {
+  const db = await initDatabaseConnection();
+
+  const whistory = await allSQL(
+    db,
+    `SELECT * FROM wallets_history WHERE wh_walletId = ${walletId}`,
+  );
+
+  db.close();
+
+  return whistory;
+};
+
+const selectWalletHistory = async (walletId) => {
+  const db = await initDatabaseConnection();
+
+  const whistory = await allSQL(
+    db,
+    `SELECT * FROM wallets_history INNER JOIN wallets on wallets.w_id = wallets_history.wh_walletId WHERE wh_walletId = ${walletId} ORDER BY wh_date DESC`,
   );
 
   db.close();
@@ -76,4 +102,6 @@ module.exports = {
   deleteWalletHistorySoft,
   deleteWalletHistoryHard,
   selectWalletsHistory,
+  selectWalletsHistoryByWalletId,
+  selectWalletHistory,
 };

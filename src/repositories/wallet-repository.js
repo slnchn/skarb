@@ -64,9 +64,51 @@ const selectWallets = async () => {
   return wallets;
 };
 
+const selectWalletById = async (id) => {
+  const db = await initDatabaseConnection();
+
+  const wallet = await allSQL(
+    db,
+    `SELECT * FROM wallets WHERE w_id = ${id} LIMIT 1`,
+  );
+
+  db.close();
+
+  return wallet;
+};
+
+const selectWalletsByCurrencyId = async (currencyId) => {
+  const db = await initDatabaseConnection();
+
+  const wallets = await allSQL(
+    db,
+    `SELECT * FROM wallets WHERE w_currencyId = ${currencyId}`,
+  );
+
+  db.close();
+
+  return wallets;
+};
+
+const selectWalletsByNameCaseInsensitive = async (name) => {
+  const db = await initDatabaseConnection();
+
+  const wallets = await allSQL(
+    db,
+    `SELECT * FROM wallets WHERE LOWER(w_name) = LOWER("${name}")`,
+  );
+
+  db.close();
+
+  return wallets;
+};
+
 module.exports = {
   insertWallet,
   deleteWalletSoft,
   deleteWalletHard,
   selectWallets,
+  selectWalletById,
+  selectWalletsByCurrencyId,
+  selectWalletsByNameCaseInsensitive,
 };

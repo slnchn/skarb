@@ -1,4 +1,4 @@
-const fs = require('fs/promises');
+const fs = require('node:fs/promises');
 const sqlite3 = require('sqlite3');
 
 let databaseConnection = null;

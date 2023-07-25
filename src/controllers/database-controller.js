@@ -2,6 +2,7 @@ const {
   createDatabase,
   migrateDatabase,
 } = require('../services/database-service');
+const { exportData } = require('../services/exporting-service');
 
 const handleInit = async () => {
   try {
@@ -19,7 +20,18 @@ const handleMigrate = async () => {
   }
 };
 
+const handleExport = async (params) => {
+  try {
+    const { type } = params;
+    console.log(`Exporting data to ${type}...`);
+    await exportData(type);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
   handleInit,
   handleMigrate,
+  handleExport,
 };

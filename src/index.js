@@ -21,6 +21,7 @@ const {
   handleAddWhistoryEntry,
   handleListWhistory,
   handleRmWhistoryEntry,
+  handleExportWhistory,
 } = require('./controllers/whistory-controller');
 
 program.command('init').action(handleInit);
@@ -103,5 +104,11 @@ whistory
   .description('Shows a list of wallets history')
   .option('-w, --walletId <walletId>', 'Wallet id')
   .action(handleListWhistory);
+
+whistory
+  .command('export')
+  .description('Export wallets history')
+  .option('-w, --walletId <walletId>')
+  .action(handleExportWhistory);
 
 program.parse(process.argv);

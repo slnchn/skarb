@@ -6,6 +6,7 @@ const {
   selectWalletHistory,
 } = require('../repositories/whistory-repository');
 const { selectWalletById } = require('../repositories/wallet-repository');
+const { exportWhistoryToCsv } = require('../services/whistory-service');
 const { formatWhistoryFromDb } = require('../formatters/whistory-formatter');
 
 const handleAddWhistoryEntry = async (params) => {
@@ -57,8 +58,28 @@ const handleListWhistory = async (params) => {
   }
 };
 
+const handleExportWhistory = async (params) => {
+  try {
+    const { walletId } = params;
+
+    let result = [];
+    let walletName = '';
+    if (walletId) {
+      result = await selectWalletHistory(walletId);
+      walletName = result[0].w_name;
+    } else {
+      result = await selectWalletsHistory();
+    }
+
+    await exportWhistoryToCsv(result, walletName);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
   handleAddWhistoryEntry,
   handleRmWhistoryEntry,
   handleListWhistory,
+  handleExportWhistory,
 };

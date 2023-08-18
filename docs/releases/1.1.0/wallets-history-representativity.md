@@ -6,7 +6,7 @@ description: Wallets history data should be more visual and representative.
 
 ### Bar chart
 
-The `cream whistory bar-chart -w 1` command should draw a bar chart for a wallet with id=1.
+The `skarb whistory bar-chart -w 1` command should draw a bar chart for a wallet with id=1.
 
 ```
 Wallet | Date                | Money Amount
@@ -33,9 +33,7 @@ For cases when there is a time span between two consequent wallet history entrie
 Add an optional `-w, --wallet-id` argument to the `list` command
 
 ```
-cream whistory list -w 1
+skarb whistory list -w 1
 ```
-
-
 
 ### Wallets History table should include the wallet name, not only id&#x20;

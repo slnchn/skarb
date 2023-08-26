@@ -1,17 +1,15 @@
-const {
+import {
   insertCurrency,
   selectCurrencies,
   deleteCurrencyHard,
   deleteCurrencySoft,
   selectCurrenciesByNameCaseInsensitive,
-} = require('../repositories/currency-repository');
-const {
-  selectWalletsByCurrencyId,
-} = require('../repositories/wallet-repository');
-const { formatCurrencyFromDb } = require('../formatters/currency-formatter');
-const { formatWalletFromDb } = require('../formatters/wallets-formatter');
+} from '../repositories/currency-repository';
+import { selectWalletsByCurrencyId } from '../repositories/wallet-repository';
+import { formatCurrencyFromDb } from '../formatters/currency-formatter';
+import { formatWalletFromDb } from '../formatters/wallets-formatter';
 
-const handleAddCurrency = async (params) => {
+export const handleAddCurrency = async (params) => {
   try {
     const { name: currency } = params;
 
@@ -31,7 +29,7 @@ const handleAddCurrency = async (params) => {
   }
 };
 
-const handleRmCurrency = async (params) => {
+export const handleRmCurrency = async (params) => {
   try {
     const { currencyId, hard } = params;
 
@@ -57,17 +55,11 @@ const handleRmCurrency = async (params) => {
   }
 };
 
-const handleListCurrencies = async () => {
+export const handleListCurrencies = async () => {
   try {
     const currencies = await selectCurrencies();
     console.table(currencies.map(formatCurrencyFromDb));
   } catch (error) {
     console.error(error);
   }
-};
-
-module.exports = {
-  handleAddCurrency,
-  handleRmCurrency,
-  handleListCurrencies,
 };

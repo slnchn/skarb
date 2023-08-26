@@ -1,6 +1,6 @@
-const { initDatabaseConnection, allSQL } = require('../database');
+import { initDatabaseConnection, allSQL } from '../database';
 
-const selectLatestMigration = async () => {
+export const selectLatestMigration = async () => {
   const db = await initDatabaseConnection();
 
   const [latestMigration] = await allSQL(
@@ -11,8 +11,4 @@ const selectLatestMigration = async () => {
   db.close();
 
   return latestMigration;
-};
-
-module.exports = {
-  selectLatestMigration,
 };

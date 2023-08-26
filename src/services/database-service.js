@@ -1,10 +1,8 @@
-const { initDatabaseConnection, execSQL } = require('../database');
-const { migrationsMap } = require('../queries/migrations');
-const {
-  selectLatestMigration,
-} = require('../repositories/migrations-repository');
+import { initDatabaseConnection, execSQL } from '../database';
+import { migrationsMap } from '../queries/migrations';
+import { selectLatestMigration } from '../repositories/migrations-repository';
 
-const createDatabase = async () => {
+export const createDatabase = async () => {
   try {
     const db = await initDatabaseConnection();
 
@@ -26,7 +24,7 @@ const createDatabase = async () => {
   }
 };
 
-const migrateDatabase = async () => {
+export const migrateDatabase = async () => {
   try {
     const latestMigration = await selectLatestMigration();
     console.table(latestMigration);
@@ -47,9 +45,4 @@ const migrateDatabase = async () => {
   } catch (error) {
     console.error(error);
   }
-};
-
-module.exports = {
-  createDatabase,
-  migrateDatabase,
 };

@@ -1,6 +1,7 @@
 {
   "name": "skarb",
   "version": "1.1.0",
+  "type": "module",
   "description": "",
   "main": "./src/index.js",
   "bin": {

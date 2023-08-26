@@ -1,30 +1,27 @@
 #! /usr/bin/env node
 
-const { program } = require('commander');
+import { program } from 'commander';
 
-const { logger, decorateWithArgsLogger } = require('./logger');
+import { logger, decorateWithArgsLogger } from './logger.js';
 
 // controllers
-const {
-  handleInit,
-  handleMigrate,
-} = require('./controllers/database-controller');
-const {
+import { handleInit, handleMigrate } from './controllers/database-controller';
+import {
   handleAddCurrency,
   handleListCurrencies,
   handleRmCurrency,
-} = require('./controllers/currency-controller');
-const {
+} from './controllers/currency-controller';
+import {
   handleAddWallet,
   handleListWallets,
   handleRmWallet,
-} = require('./controllers/wallet-controller');
-const {
+} from './controllers/wallet-controller';
+import {
   handleAddWhistoryEntry,
   handleListWhistory,
   handleRmWhistoryEntry,
   handleExportWhistory,
-} = require('./controllers/whistory-controller');
+} from './controllers/whistory-controller';
 
 logger.info('Skarb CLI started');
 

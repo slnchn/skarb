@@ -21,7 +21,6 @@ const handleAddWallet = async (params) => {
 
     if (!walletsWithSameName.length) {
       const [currency] = await selectCurrencyById(currencyId);
-      console.log(currency);
       if (currency) {
         // create wallet only if the referenced currency already exists
         const result = await insertWallet({ wallet, currencyId });

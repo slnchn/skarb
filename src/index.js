@@ -5,23 +5,26 @@ import { program } from 'commander';
 import { logger, decorateWithArgsLogger } from './logger.js';
 
 // controllers
-import { handleInit, handleMigrate } from './controllers/database-controller';
+import {
+  handleInit,
+  handleMigrate,
+} from './controllers/database-controller.js';
 import {
   handleAddCurrency,
   handleListCurrencies,
   handleRmCurrency,
-} from './controllers/currency-controller';
+} from './controllers/currency-controller.js';
 import {
   handleAddWallet,
   handleListWallets,
   handleRmWallet,
-} from './controllers/wallet-controller';
+} from './controllers/wallet-controller.js';
 import {
   handleAddWhistoryEntry,
   handleListWhistory,
   handleRmWhistoryEntry,
   handleExportWhistory,
-} from './controllers/whistory-controller';
+} from './controllers/whistory-controller.js';
 
 logger.info('Skarb CLI started');
 

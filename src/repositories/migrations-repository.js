@@ -1,4 +1,4 @@
-import { initDatabaseConnection, allSQL } from '../database';
+import { initDatabaseConnection, allSQL } from '../database.js';
 
 export const selectLatestMigration = async () => {
   const db = await initDatabaseConnection();

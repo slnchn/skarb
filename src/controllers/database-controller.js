@@ -1,5 +1,8 @@
-import { createDatabase, migrateDatabase } from '../services/database-service';
-import { exportData } from '../services/exporting-service';
+import {
+  createDatabase,
+  migrateDatabase,
+} from '../services/database-service.js';
+import { exportData } from '../services/exporting-service.js';
 
 export const handleInit = async () => {
   try {

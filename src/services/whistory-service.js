@@ -1,5 +1,5 @@
-import { getTableCsvContent, exportData } from './exporting-service';
-import { formatDateToSimpleString } from '../utils';
+import { getTableCsvContent, exportData } from './exporting-service.js';
+import { formatDateToSimpleString } from '../utils.js';
 
 export const exportWhistoryToCsv = async (walletsHistory, walletName) => {
   try {

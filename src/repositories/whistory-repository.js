@@ -1,4 +1,4 @@
-import { initDatabaseConnection, runSQL, allSQL } from '../database';
+import { initDatabaseConnection, runSQL, allSQL } from '../database.js';
 
 export const insertWhistory = async ({ walletId, amount, date }) => {
   const db = await initDatabaseConnection();

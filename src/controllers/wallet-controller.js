@@ -4,10 +4,10 @@ import {
   deleteWalletHard,
   deleteWalletSoft,
   selectWalletsByNameCaseInsensitive,
-} from '../repositories/wallet-repository';
-import { selectCurrencyById } from '../repositories/currency-repository';
-import { selectWalletsHistoryByWalletId } from '../repositories/whistory-repository';
-import { formatWalletFromDb } from '../formatters/wallets-formatter';
+} from '../repositories/wallet-repository.js';
+import { selectCurrencyById } from '../repositories/currency-repository.js';
+import { selectWalletsHistoryByWalletId } from '../repositories/whistory-repository.js';
+import { formatWalletFromDb } from '../formatters/wallets-formatter.js';
 
 export const handleAddWallet = async (params) => {
   try {

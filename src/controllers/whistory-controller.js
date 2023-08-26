@@ -4,10 +4,10 @@ import {
   deleteWalletHistorySoft,
   deleteWalletHistoryHard,
   selectWalletHistory,
-} from '../repositories/whistory-repository';
-import { selectWalletById } from '../repositories/wallet-repository';
-import { exportWhistoryToCsv } from '../services/whistory-service';
-import { formatWhistoryFromDb } from '../formatters/whistory-formatter';
+} from '../repositories/whistory-repository.js';
+import { selectWalletById } from '../repositories/wallet-repository.js';
+import { exportWhistoryToCsv } from '../services/whistory-service.js';
+import { formatWhistoryFromDb } from '../formatters/whistory-formatter.js';
 
 export const handleAddWhistoryEntry = async (params) => {
   try {

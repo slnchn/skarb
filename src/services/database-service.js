@@ -1,6 +1,6 @@
-import { initDatabaseConnection, execSQL } from '../database';
-import { migrationsMap } from '../queries/migrations';
-import { selectLatestMigration } from '../repositories/migrations-repository';
+import { initDatabaseConnection, execSQL } from '../database.js';
+import { migrationsMap } from '../queries/migrations.js';
+import { selectLatestMigration } from '../repositories/migrations-repository.js';
 
 export const createDatabase = async () => {
   try {

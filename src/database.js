@@ -5,7 +5,7 @@ let databaseConnection = null;
 
 const checkIfDatabaseExists = async () => {
   try {
-    await fs.access('./cream.sqlite3');
+    await fs.access('./skarb.sqlite3');
     return true;
   } catch (error) {
     console.error(error);
@@ -49,7 +49,7 @@ const allSQL = (db, sql) =>
 const initDatabaseConnection = async () => {
   try {
     databaseConnection = new Promise((resolve, reject) => {
-      const db = new sqlite3.Database('./cream.sqlite3', (err) => {
+      const db = new sqlite3.Database('./skarb.sqlite3', (err) => {
         if (err) {
           reject(err);
         }

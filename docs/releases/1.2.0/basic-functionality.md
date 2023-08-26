@@ -4,11 +4,11 @@
 
 #### migrations
 
-| Field       | Type         | Default                |
-| ----------- | ------------ | ---------------------- |
-| m_id        | integer      | autoincrement          |
-| m_title     | varchar(255) |                        |
-| m_createdAt | datetime     | datetime('now', 'utc') |
+| Field        | Type         | Default                |
+| ------------ | ------------ | ---------------------- |
+| m\_id        | integer      | autoincrement          |
+| m\_title     | varchar(255) |                        |
+| m\_createdAt | datetime     | datetime('now', 'utc') |
 
 System table, users won't have _direct_ access to it.
 
@@ -21,13 +21,13 @@ skarb migrate -- it should find the latest applied migration in the database
 
 #### currencies
 
-| Field       | Type         | Default                |
-| ----------- | ------------ | ---------------------- |
-| c_id        | integer      | autoincrement          |
-| c_name      | varchar(255) |                        |
-| c_createdAt | datetime     | datetime('now', 'utc') |
-| c_updatedAt | datetime     | datetime('now', 'utc') |
-| c_deletedAt | datetime     | null                   |
+| Field        | Type         | Default                |
+| ------------ | ------------ | ---------------------- |
+| c\_id        | integer      | autoincrement          |
+| c\_name      | varchar(255) |                        |
+| c\_createdAt | datetime     | datetime('now', 'utc') |
+| c\_updatedAt | datetime     | datetime('now', 'utc') |
+| c\_deletedAt | datetime     | null                   |
 
 Users can perform basic manipulations on this table.
 
@@ -47,14 +47,14 @@ The currency will be deleted only if there are no related wallets.
 
 #### wallets
 
-| Field        | Type         | Default                |
-| ------------ | ------------ | ---------------------- |
-| w_id         | integer      | autoincrement          |
-| w_name       | varchar(255) |                        |
-| w_currencyId | integer      |                        |
-| w_createdAt  | datetime     | datetime('now', 'utc') |
-| w_updatedAt  | datetime     | datetime('now', 'utc') |
-| w_deletedAt  | datetime     | null                   |
+| Field         | Type         | Default                |
+| ------------- | ------------ | ---------------------- |
+| w\_id         | integer      | autoincrement          |
+| w\_name       | varchar(255) |                        |
+| w\_currencyId | integer      |                        |
+| w\_createdAt  | datetime     | datetime('now', 'utc') |
+| w\_updatedAt  | datetime     | datetime('now', 'utc') |
+| w\_deletedAt  | datetime     | null                   |
 
 ```
 skarb wallets list -- shows the list of wallets as a table
@@ -72,16 +72,16 @@ _Deleting a wallet_
 
 The wallet will be deleted only if there are no related wallet history entries.
 
-#### wallets_history
+#### wallets\_history
 
-| Field          | Type     | Default                |
-| -------------- | -------- | ---------------------- |
-| wh_id          | integer  | autoincrement          |
-| wh_walletId    | integer  |                        |
-| wh_moneyAmount | numeric  |                        |
-| wh_createdAt   | datetime | datetime('now', 'utc') |
-| wh_updatedAt   | datetime | datetime('now', 'utc') |
-| wh_deletedAt   | datetime | null                   |
+| Field           | Type     | Default                |
+| --------------- | -------- | ---------------------- |
+| wh\_id          | integer  | autoincrement          |
+| wh\_walletId    | integer  |                        |
+| wh\_moneyAmount | numeric  |                        |
+| wh\_createdAt   | datetime | datetime('now', 'utc') |
+| wh\_updatedAt   | datetime | datetime('now', 'utc') |
+| wh\_deletedAt   | datetime | null                   |
 
 ```
 skarb whistory list -- shows the list of wallets_history as a table
@@ -89,6 +89,7 @@ skarb whistory list -w 1 -- shows the list of wallets_history as a table
                             where the wh_walletId is 1
 skarb whistory add -n "PKO Savings" -c 1 -- adds an entry to the wallets_history table
 skarb whistory rm -wh 1 -- deletes an entry from the wallets_history table
+skarb whistory export -w 1 -- exports data from the database to the CSV
 ```
 
 _Adding a wallet history entry_

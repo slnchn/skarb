@@ -1,10 +1,10 @@
 {
-  "name": "cream",
+  "name": "skarb",
   "version": "1.1.0",
   "description": "",
   "main": "./src/index.js",
   "bin": {
-    "cream": "./src/index.js"
+    "skarb": "./src/index.js"
   },
   "scripts": {
     "start": "node ./src/index.js",

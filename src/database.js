@@ -1,9 +1,9 @@
-const fs = require('node:fs/promises');
-const sqlite3 = require('sqlite3');
+import fs from 'node:fs/promises';
+import sqlite3 from 'sqlite3';
 
 let databaseConnection = null;
 
-const checkIfDatabaseExists = async () => {
+export const checkIfDatabaseExists = async () => {
   try {
     await fs.access('./skarb.sqlite3');
     return true;
@@ -13,7 +13,7 @@ const checkIfDatabaseExists = async () => {
   }
 };
 
-const runSQL = (db, sql) =>
+export const runSQL = (db, sql) =>
   new Promise((resolve, reject) => {
     db.run(sql, (err, ...rest) => {
       if (err) {
@@ -24,7 +24,7 @@ const runSQL = (db, sql) =>
     });
   });
 
-const execSQL = (db, sql) =>
+export const execSQL = (db, sql) =>
   new Promise((resolve, reject) => {
     db.exec(sql, (err, ...rest) => {
       if (err) {
@@ -35,7 +35,7 @@ const execSQL = (db, sql) =>
     });
   });
 
-const allSQL = (db, sql) =>
+export const allSQL = (db, sql) =>
   new Promise((resolve, reject) => {
     db.all(sql, (err, ...rest) => {
       if (err) {
@@ -46,7 +46,7 @@ const allSQL = (db, sql) =>
     });
   });
 
-const initDatabaseConnection = async () => {
+export const initDatabaseConnection = async () => {
   try {
     databaseConnection = new Promise((resolve, reject) => {
       const db = new sqlite3.Database('./skarb.sqlite3', (err) => {
@@ -62,12 +62,4 @@ const initDatabaseConnection = async () => {
   } catch (error) {
     return null;
   }
-};
-
-module.exports = {
-  checkIfDatabaseExists,
-  initDatabaseConnection,
-  runSQL,
-  execSQL,
-  allSQL,
 };

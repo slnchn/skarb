@@ -1,6 +1,6 @@
-const { initDatabaseConnection, runSQL, allSQL } = require('../database');
+import { initDatabaseConnection, runSQL, allSQL } from '../database.js';
 
-const insertWallet = async ({ wallet, currencyId }) => {
+export const insertWallet = async ({ wallet, currencyId }) => {
   const db = await initDatabaseConnection();
 
   await runSQL(
@@ -18,7 +18,7 @@ const insertWallet = async ({ wallet, currencyId }) => {
   return latestInserted;
 };
 
-const deleteWalletSoft = async (id) => {
+export const deleteWalletSoft = async (id) => {
   const db = await initDatabaseConnection();
 
   await runSQL(
@@ -36,7 +36,7 @@ const deleteWalletSoft = async (id) => {
   return updatedWallet;
 };
 
-const deleteWalletHard = async (id) => {
+export const deleteWalletHard = async (id) => {
   const db = await initDatabaseConnection();
 
   const walletToDelete = await allSQL(
@@ -51,7 +51,7 @@ const deleteWalletHard = async (id) => {
   return walletToDelete;
 };
 
-const selectWallets = async () => {
+export const selectWallets = async () => {
   const db = await initDatabaseConnection();
 
   const wallets = await allSQL(
@@ -64,7 +64,7 @@ const selectWallets = async () => {
   return wallets;
 };
 
-const selectWalletById = async (id) => {
+export const selectWalletById = async (id) => {
   const db = await initDatabaseConnection();
 
   const wallet = await allSQL(
@@ -77,7 +77,7 @@ const selectWalletById = async (id) => {
   return wallet;
 };
 
-const selectWalletsByCurrencyId = async (currencyId) => {
+export const selectWalletsByCurrencyId = async (currencyId) => {
   const db = await initDatabaseConnection();
 
   const wallets = await allSQL(
@@ -90,7 +90,7 @@ const selectWalletsByCurrencyId = async (currencyId) => {
   return wallets;
 };
 
-const selectWalletsByNameCaseInsensitive = async (name) => {
+export const selectWalletsByNameCaseInsensitive = async (name) => {
   const db = await initDatabaseConnection();
 
   const wallets = await allSQL(
@@ -101,14 +101,4 @@ const selectWalletsByNameCaseInsensitive = async (name) => {
   db.close();
 
   return wallets;
-};
-
-module.exports = {
-  insertWallet,
-  deleteWalletSoft,
-  deleteWalletHard,
-  selectWallets,
-  selectWalletById,
-  selectWalletsByCurrencyId,
-  selectWalletsByNameCaseInsensitive,
 };

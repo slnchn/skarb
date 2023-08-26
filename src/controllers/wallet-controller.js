@@ -1,17 +1,15 @@
-const {
+import {
   insertWallet,
   selectWallets,
   deleteWalletHard,
   deleteWalletSoft,
   selectWalletsByNameCaseInsensitive,
-} = require('../repositories/wallet-repository');
-const { selectCurrencyById } = require('../repositories/currency-repository');
-const {
-  selectWalletsHistoryByWalletId,
-} = require('../repositories/whistory-repository');
-const { formatWalletFromDb } = require('../formatters/wallets-formatter');
+} from '../repositories/wallet-repository.js';
+import { selectCurrencyById } from '../repositories/currency-repository.js';
+import { selectWalletsHistoryByWalletId } from '../repositories/whistory-repository.js';
+import { formatWalletFromDb } from '../formatters/wallets-formatter.js';
 
-const handleAddWallet = async (params) => {
+export const handleAddWallet = async (params) => {
   try {
     const { name: wallet, currencyId } = params;
 
@@ -37,7 +35,7 @@ const handleAddWallet = async (params) => {
   }
 };
 
-const handleRmWallet = async (params) => {
+export const handleRmWallet = async (params) => {
   try {
     const { walletId, hard } = params;
 
@@ -63,17 +61,11 @@ const handleRmWallet = async (params) => {
   }
 };
 
-const handleListWallets = async () => {
+export const handleListWallets = async () => {
   try {
     const wallets = await selectWallets();
     console.table(wallets.map(formatWalletFromDb));
   } catch (error) {
     console.error(error);
   }
-};
-
-module.exports = {
-  handleAddWallet,
-  handleRmWallet,
-  handleListWallets,
 };

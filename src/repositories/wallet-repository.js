@@ -1,6 +1,6 @@
-import { initDatabaseConnection, runSQL, allSQL } from '../database.js';
+const { initDatabaseConnection, runSQL, allSQL } = require('../database');
 
-export const insertWallet = async ({ wallet, currencyId }) => {
+const insertWallet = async ({ wallet, currencyId }) => {
   const db = await initDatabaseConnection();
 
   await runSQL(
@@ -18,7 +18,7 @@ export const insertWallet = async ({ wallet, currencyId }) => {
   return latestInserted;
 };
 
-export const deleteWalletSoft = async (id) => {
+const deleteWalletSoft = async (id) => {
   const db = await initDatabaseConnection();
 
   await runSQL(
@@ -36,7 +36,7 @@ export const deleteWalletSoft = async (id) => {
   return updatedWallet;
 };
 
-export const deleteWalletHard = async (id) => {
+const deleteWalletHard = async (id) => {
   const db = await initDatabaseConnection();
 
   const walletToDelete = await allSQL(
@@ -51,7 +51,7 @@ export const deleteWalletHard = async (id) => {
   return walletToDelete;
 };
 
-export const selectWallets = async () => {
+const selectWallets = async () => {
   const db = await initDatabaseConnection();
 
   const wallets = await allSQL(
@@ -64,7 +64,7 @@ export const selectWallets = async () => {
   return wallets;
 };
 
-export const selectWalletById = async (id) => {
+const selectWalletById = async (id) => {
   const db = await initDatabaseConnection();
 
   const wallet = await allSQL(
@@ -77,7 +77,7 @@ export const selectWalletById = async (id) => {
   return wallet;
 };
 
-export const selectWalletsByCurrencyId = async (currencyId) => {
+const selectWalletsByCurrencyId = async (currencyId) => {
   const db = await initDatabaseConnection();
 
   const wallets = await allSQL(
@@ -90,7 +90,7 @@ export const selectWalletsByCurrencyId = async (currencyId) => {
   return wallets;
 };
 
-export const selectWalletsByNameCaseInsensitive = async (name) => {
+const selectWalletsByNameCaseInsensitive = async (name) => {
   const db = await initDatabaseConnection();
 
   const wallets = await allSQL(
@@ -101,4 +101,14 @@ export const selectWalletsByNameCaseInsensitive = async (name) => {
   db.close();
 
   return wallets;
+};
+
+module.exports = {
+  insertWallet,
+  deleteWalletSoft,
+  deleteWalletHard,
+  selectWallets,
+  selectWalletById,
+  selectWalletsByCurrencyId,
+  selectWalletsByNameCaseInsensitive,
 };

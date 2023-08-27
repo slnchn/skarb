@@ -39,7 +39,7 @@ const createWalletsTablesSQL = `
   insert into migrations (m_title) values (2);
 `;
 
-export const migrationsMap = {
+const migrationsMap = {
   1: {
     title: 'create_migrations_table',
     sql: createMigrationsTableSQL,
@@ -49,4 +49,8 @@ export const migrationsMap = {
     title: 'create_wallets_tables',
     sql: createWalletsTablesSQL,
   },
+};
+
+module.exports = {
+  migrationsMap,
 };

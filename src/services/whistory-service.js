@@ -1,7 +1,7 @@
-import { getTableCsvContent, exportData } from './exporting-service.js';
-import { formatDateToSimpleString } from '../utils.js';
+const { getTableCsvContent, exportData } = require('./exporting-service');
+const { formatDateToSimpleString } = require('../utils');
 
-export const exportWhistoryToCsv = async (walletsHistory, walletName) => {
+const exportWhistoryToCsv = async (walletsHistory, walletName) => {
   try {
     const csvContent = getTableCsvContent(walletsHistory);
     await exportData(
@@ -14,4 +14,8 @@ export const exportWhistoryToCsv = async (walletsHistory, walletName) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+module.exports = {
+  exportWhistoryToCsv,
 };

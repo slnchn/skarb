@@ -1,6 +1,6 @@
-import { initDatabaseConnection, runSQL, allSQL } from '../database.js';
+const { initDatabaseConnection, runSQL, allSQL } = require('../database');
 
-export const insertCurrency = async ({ currency }) => {
+const insertCurrency = async ({ currency }) => {
   const db = await initDatabaseConnection();
 
   await runSQL(db, `INSERT INTO currencies (c_name) VALUES ("${currency}")`);
@@ -14,7 +14,7 @@ export const insertCurrency = async ({ currency }) => {
   return latestInserted;
 };
 
-export const deleteCurrencySoft = async (id) => {
+const deleteCurrencySoft = async (id) => {
   const db = await initDatabaseConnection();
 
   await runSQL(
@@ -31,7 +31,7 @@ export const deleteCurrencySoft = async (id) => {
   return updatedCurrency;
 };
 
-export const deleteCurrencyHard = async (id) => {
+const deleteCurrencyHard = async (id) => {
   const db = await initDatabaseConnection();
 
   const currencyToDelete = await allSQL(
@@ -45,14 +45,14 @@ export const deleteCurrencyHard = async (id) => {
   return currencyToDelete;
 };
 
-export const selectCurrencies = async () => {
+const selectCurrencies = async () => {
   const db = await initDatabaseConnection();
   const currencies = await allSQL(db, `SELECT * FROM currencies`);
   db.close();
   return currencies;
 };
 
-export const selectCurrencyById = async (id) => {
+const selectCurrencyById = async (id) => {
   const db = await initDatabaseConnection();
 
   const currency = await allSQL(
@@ -64,7 +64,7 @@ export const selectCurrencyById = async (id) => {
   return currency;
 };
 
-export const selectCurrenciesByNameCaseInsensitive = async (name) => {
+const selectCurrenciesByNameCaseInsensitive = async (name) => {
   const db = await initDatabaseConnection();
 
   const currency = await allSQL(
@@ -74,4 +74,13 @@ export const selectCurrenciesByNameCaseInsensitive = async (name) => {
 
   db.close();
   return currency;
+};
+
+module.exports = {
+  insertCurrency,
+  deleteCurrencySoft,
+  deleteCurrencyHard,
+  selectCurrencies,
+  selectCurrencyById,
+  selectCurrenciesByNameCaseInsensitive,
 };

@@ -1,12 +1,12 @@
-import fs from 'node:fs/promises';
+const fs = require('node:fs/promises');
 
-export const getTableCsvContent = (tableData) =>
+const getTableCsvContent = (tableData) =>
   tableData.reduce(
     (acc, item) => `${acc}${Object.values(item).join(',')}\n`,
     `${Object.keys(tableData[0]).join(',')}\n`,
   );
 
-export const exportData = async (type, fileName, content) => {
+const exportData = async (type, fileName, content) => {
   try {
     const exportsFolderName = `./exports`;
     await fs.mkdir(exportsFolderName, { recursive: true });
@@ -14,4 +14,9 @@ export const exportData = async (type, fileName, content) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+module.exports = {
+  exportData,
+  getTableCsvContent,
 };

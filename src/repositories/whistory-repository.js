@@ -1,6 +1,6 @@
-import { initDatabaseConnection, runSQL, allSQL } from '../database.js';
+const { initDatabaseConnection, runSQL, allSQL } = require('../database');
 
-export const insertWhistory = async ({ walletId, amount, date }) => {
+const insertWhistory = async ({ walletId, amount, date }) => {
   const db = await initDatabaseConnection();
 
   if (date) {
@@ -25,7 +25,7 @@ export const insertWhistory = async ({ walletId, amount, date }) => {
   return newWhistoryEntry;
 };
 
-export const deleteWalletHistorySoft = async (id) => {
+const deleteWalletHistorySoft = async (id) => {
   const db = await initDatabaseConnection();
 
   await runSQL(
@@ -43,7 +43,7 @@ export const deleteWalletHistorySoft = async (id) => {
   return updatedWalletHistory;
 };
 
-export const deleteWalletHistoryHard = async (id) => {
+const deleteWalletHistoryHard = async (id) => {
   const db = await initDatabaseConnection();
 
   const walletHistoryToDelete = await allSQL(
@@ -58,7 +58,7 @@ export const deleteWalletHistoryHard = async (id) => {
   return walletHistoryToDelete;
 };
 
-export const selectWalletsHistory = async () => {
+const selectWalletsHistory = async () => {
   const db = await initDatabaseConnection();
 
   const whistory = await allSQL(
@@ -71,7 +71,7 @@ export const selectWalletsHistory = async () => {
   return whistory;
 };
 
-export const selectWalletsHistoryByWalletId = async (walletId) => {
+const selectWalletsHistoryByWalletId = async (walletId) => {
   const db = await initDatabaseConnection();
 
   const whistory = await allSQL(
@@ -84,7 +84,7 @@ export const selectWalletsHistoryByWalletId = async (walletId) => {
   return whistory;
 };
 
-export const selectWalletHistory = async (walletId) => {
+const selectWalletHistory = async (walletId) => {
   const db = await initDatabaseConnection();
 
   const whistory = await allSQL(
@@ -95,4 +95,13 @@ export const selectWalletHistory = async (walletId) => {
   db.close();
 
   return whistory;
+};
+
+module.exports = {
+  insertWhistory,
+  deleteWalletHistorySoft,
+  deleteWalletHistoryHard,
+  selectWalletsHistory,
+  selectWalletsHistoryByWalletId,
+  selectWalletHistory,
 };

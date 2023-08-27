@@ -1,10 +1,10 @@
-import {
+const {
   createDatabase,
   migrateDatabase,
-} from '../services/database-service.js';
-import { exportData } from '../services/exporting-service.js';
+} = require('../services/database-service');
+const { exportData } = require('../services/exporting-service');
 
-export const handleInit = async () => {
+const handleInit = async () => {
   try {
     await createDatabase();
   } catch (error) {
@@ -12,7 +12,7 @@ export const handleInit = async () => {
   }
 };
 
-export const handleMigrate = async () => {
+const handleMigrate = async () => {
   try {
     await migrateDatabase();
   } catch (error) {
@@ -20,7 +20,7 @@ export const handleMigrate = async () => {
   }
 };
 
-export const handleExport = async (params) => {
+const handleExport = async (params) => {
   try {
     const { type } = params;
     console.log(`Exporting data to ${type}...`);
@@ -28,4 +28,10 @@ export const handleExport = async (params) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+module.exports = {
+  handleInit,
+  handleMigrate,
+  handleExport,
 };

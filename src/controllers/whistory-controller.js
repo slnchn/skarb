@@ -1,15 +1,15 @@
-import {
+const {
   insertWhistory,
   selectWalletsHistory,
   deleteWalletHistorySoft,
   deleteWalletHistoryHard,
   selectWalletHistory,
-} from '../repositories/whistory-repository.js';
-import { selectWalletById } from '../repositories/wallet-repository.js';
-import { exportWhistoryToCsv } from '../services/whistory-service.js';
-import { formatWhistoryFromDb } from '../formatters/whistory-formatter.js';
+} = require('../repositories/whistory-repository');
+const { selectWalletById } = require('../repositories/wallet-repository');
+const { exportWhistoryToCsv } = require('../services/whistory-service');
+const { formatWhistoryFromDb } = require('../formatters/whistory-formatter');
 
-export const handleAddWhistoryEntry = async (params) => {
+const handleAddWhistoryEntry = async (params) => {
   try {
     const { walletId, amount, date } = params;
 
@@ -25,7 +25,7 @@ export const handleAddWhistoryEntry = async (params) => {
   }
 };
 
-export const handleRmWhistoryEntry = async (params) => {
+const handleRmWhistoryEntry = async (params) => {
   try {
     const { walletHistoryId, hard } = params;
     let result = {};
@@ -41,7 +41,7 @@ export const handleRmWhistoryEntry = async (params) => {
   }
 };
 
-export const handleListWhistory = async (params) => {
+const handleListWhistory = async (params) => {
   try {
     const { walletId } = params;
 
@@ -58,7 +58,7 @@ export const handleListWhistory = async (params) => {
   }
 };
 
-export const handleExportWhistory = async (params) => {
+const handleExportWhistory = async (params) => {
   try {
     const { walletId } = params;
 
@@ -75,4 +75,11 @@ export const handleExportWhistory = async (params) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+module.exports = {
+  handleAddWhistoryEntry,
+  handleRmWhistoryEntry,
+  handleListWhistory,
+  handleExportWhistory,
 };

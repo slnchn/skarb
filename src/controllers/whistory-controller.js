@@ -1,3 +1,6 @@
+const path = require('path');
+const child = require('child_process');
+
 const {
   insertWhistory,
   selectWalletsHistory,
@@ -77,9 +80,36 @@ const handleExportWhistory = async (params) => {
   }
 };
 
+const handlePlotWhistory = async (params) => {
+  try {
+    const { walletId } = params;
+    const walletHistory = await selectWalletHistory(walletId);
+
+    const process = child.spawn('python', [
+      path.join(__dirname, '../../scripts/plot_whistory.py'),
+      JSON.stringify(walletHistory),
+    ]);
+
+    process.stdout.on('data', (data) => {
+      console.log(`Python script output: ${data}`);
+    });
+
+    process.stderr.on('data', (data) => {
+      console.error(`Python script error: ${data}`);
+    });
+
+    process.on('close', (code) => {
+      console.log(`Python script exited with code ${code}`);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
   handleAddWhistoryEntry,
   handleRmWhistoryEntry,
   handleListWhistory,
   handleExportWhistory,
+  handlePlotWhistory,
 };

@@ -11,6 +11,7 @@ const {
 const { selectWalletById } = require('../repositories/wallet-repository');
 const { exportWhistoryToCsv } = require('../services/whistory-service');
 const { formatWhistoryFromDb } = require('../formatters/whistory-formatter');
+const { logger } = require('../logger');
 
 const handleAddWhistoryEntry = async (params) => {
   try {
@@ -106,10 +107,38 @@ const handlePlotWhistory = async (params) => {
   }
 };
 
+const handlePlotWhistoryDiff = async (params) => {
+  try {
+    const { walletId } = params;
+
+    const walletHistory = await selectWalletHistory(walletId);
+
+    const process = child.spawn('python', [
+      path.join(__dirname, '../../scripts/plot_whistory_diff.py'),
+      JSON.stringify(walletHistory),
+    ]);
+
+    process.stdout.on('data', (data) => {
+      console.log(`Python script output: ${data}`);
+    });
+
+    process.stderr.on('data', (data) => {
+      console.error(`Python script error: ${data}`);
+    });
+
+    process.on('close', (code) => {
+      console.log(`Python script exited with code ${code}`);
+    });
+  } catch (error) {
+    logger.error(error);
+  }
+};
+
 module.exports = {
   handleAddWhistoryEntry,
   handleRmWhistoryEntry,
   handleListWhistory,
   handleExportWhistory,
   handlePlotWhistory,
+  handlePlotWhistoryDiff,
 };

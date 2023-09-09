@@ -12,6 +12,10 @@ const { selectWalletById } = require('../repositories/wallet-repository');
 const { exportWhistoryToCsv } = require('../services/whistory-service');
 const { formatWhistoryFromDb } = require('../formatters/whistory-formatter');
 const { logger } = require('../logger');
+const {
+  chunkWhistoryByDays,
+  getWhistorySpanDiff,
+} = require('../utils/whistory-utils');
 
 const handleAddWhistoryEntry = async (params) => {
   try {
@@ -109,13 +113,18 @@ const handlePlotWhistory = async (params) => {
 
 const handlePlotWhistoryDiff = async (params) => {
   try {
-    const { walletId } = params;
+    const { walletId, span } = params;
+
+    console.log(walletId, span);
 
     const walletHistory = await selectWalletHistory(walletId);
+    const formattedWalletHistory = walletHistory.map(formatWhistoryFromDb);
+    const whistoryByDays = chunkWhistoryByDays(formattedWalletHistory, +span);
+    const whistoryDiff = whistoryByDays.map(getWhistorySpanDiff);
 
     const process = child.spawn('python', [
       path.join(__dirname, '../../scripts/plot_whistory_diff.py'),
-      JSON.stringify(walletHistory),
+      JSON.stringify(whistoryDiff),
     ]);
 
     process.stdout.on('data', (data) => {

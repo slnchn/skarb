@@ -122,7 +122,7 @@ const whistoryPlot = whistory
   .description('Plot wallets history');
 
 whistoryPlot
-  .command('anime')
+  .command('days')
   .description('Plot wallets history per day')
   .requiredOption('-w, --walletId <walletId>')
   .action(decorateWithArgsLogger(handlePlotWhistory));
@@ -131,6 +131,7 @@ whistoryPlot
   .command('diff')
   .description('Plot wallets history diff')
   .requiredOption('-w, --walletId <walletId>')
+  .option('-s, --span <span>', 'Span in days', '1')
   .action(decorateWithArgsLogger(handlePlotWhistoryDiff));
 
 program.parse(process.argv);

@@ -115,8 +115,6 @@ const handlePlotWhistoryDiff = async (params) => {
   try {
     const { walletId, span } = params;
 
-    console.log(walletId, span);
-
     const walletHistory = await selectWalletHistory(walletId);
     const formattedWalletHistory = walletHistory.map(formatWhistoryFromDb);
     const whistoryByDays = chunkWhistoryByDays(formattedWalletHistory, +span);

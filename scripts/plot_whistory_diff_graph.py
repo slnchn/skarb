@@ -13,7 +13,7 @@ def plot_whistory_diff_graph(data):
     # Create the bar chart
     plt.figure(figsize=(10, 6))
     plt.bar(df['startDate'], df['amountDiff'], width=0.5,
-            color=['green' if val >= 0 else 'red' for val in df['amountDiff']], label='Amount Difference')
+            color=['#78c1a3' if val >= 0 else '#F38989' for val in df['amountDiff']], label='Amount Difference')
     plt.xlabel('Time Period')
     plt.ylabel('Amount Difference')
     plt.title('Amount Difference Over Time')

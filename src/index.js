@@ -25,6 +25,7 @@ const {
   handleRmWhistoryEntry,
   handleExportWhistory,
   handlePlotWhistory,
+  handlePlotWhistoryDiff,
 } = require('./controllers/whistory-controller');
 
 logger.info('Skarb CLI started');
@@ -116,11 +117,22 @@ whistory
   .option('-w, --walletId <walletId>')
   .action(decorateWithArgsLogger(handleExportWhistory));
 
-whistory
+const whistoryPlot = whistory
   .command('plot')
-  .description('Plot wallets history')
+  .description('Plot wallets history');
+
+whistoryPlot
+  .command('days')
+  .description('Plot wallets history per day')
   .requiredOption('-w, --walletId <walletId>')
   .action(decorateWithArgsLogger(handlePlotWhistory));
+
+whistoryPlot
+  .command('diff')
+  .description('Plot wallets history diff')
+  .requiredOption('-w, --walletId <walletId>')
+  .option('-s, --span <span>', 'Span in days', '1')
+  .action(decorateWithArgsLogger(handlePlotWhistoryDiff));
 
 program.parse(process.argv);
 

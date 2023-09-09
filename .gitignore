@@ -1,6 +1,9 @@
 # libs
 node_modules/
 
+# generated
+__pycache__/
+
 # data
 *.sqlite3
 *.csv
@@ -8,6 +11,10 @@ node_modules/
 # ide
 .idea/
 .vscode/
+
+# logs
+*.log
+
 
 
 

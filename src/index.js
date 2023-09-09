@@ -2,6 +2,8 @@
 
 const { program } = require('commander');
 
+const { logger, decorateWithArgsLogger } = require('./logger');
+
 // controllers
 const {
   handleInit,
@@ -22,11 +24,15 @@ const {
   handleListWhistory,
   handleRmWhistoryEntry,
   handleExportWhistory,
+  handlePlotWhistory,
+  handlePlotWhistoryDiff,
 } = require('./controllers/whistory-controller');
 
-program.command('init').action(handleInit);
+logger.info('Skarb CLI started');
 
-program.command('migrate').action(handleMigrate);
+program.command('init').action(decorateWithArgsLogger(handleInit));
+
+program.command('migrate').action(decorateWithArgsLogger(handleMigrate));
 
 // currencies
 
@@ -38,19 +44,19 @@ currencies
   .command('add')
   .description('Add a currency')
   .requiredOption('-n, --name <name>', 'Currency name')
-  .action(handleAddCurrency);
+  .action(decorateWithArgsLogger(handleAddCurrency));
 
 currencies
   .command('rm')
   .description('Remove a currency')
   .requiredOption('-c, --currency-id <currencyId>', 'Currency id')
   .option('-h, --hard', 'Hard deletion')
-  .action(handleRmCurrency);
+  .action(decorateWithArgsLogger(handleRmCurrency));
 
 currencies
   .command('list')
   .description('Shows a list of currencies')
-  .action(handleListCurrencies);
+  .action(decorateWithArgsLogger(handleListCurrencies));
 
 // wallets
 
@@ -61,19 +67,19 @@ wallets
   .description('Add a wallet')
   .requiredOption('-n, --name <name>', 'Wallet name')
   .requiredOption('-c, --currency-id <currencyId>', 'Currency id')
-  .action(handleAddWallet);
+  .action(decorateWithArgsLogger(handleAddWallet));
 
 wallets
   .command('rm')
   .description('Remove a wallet')
   .requiredOption('-w, --walletId <id>', 'Wallet id')
   .option('-h, --hard', 'Hard deletion')
-  .action(handleRmWallet);
+  .action(decorateWithArgsLogger(handleRmWallet));
 
 wallets
   .command('list')
   .description('Shows a list of wallets')
-  .action(handleListWallets);
+  .action(decorateWithArgsLogger(handleListWallets));
 
 // whistory
 
@@ -87,7 +93,7 @@ whistory
   .requiredOption('-w, --walletId <walletId>', 'Wallet id')
   .requiredOption('-a, --amount <amount>', 'Amount')
   .option('-d, --date <date>', 'Date')
-  .action(handleAddWhistoryEntry);
+  .action(decorateWithArgsLogger(handleAddWhistoryEntry));
 
 whistory
   .command('rm')
@@ -97,18 +103,47 @@ whistory
     'Wallet history id',
   )
   .option('-h, --hard', 'Hard deletion')
-  .action(handleRmWhistoryEntry);
+  .action(decorateWithArgsLogger(handleRmWhistoryEntry));
 
 whistory
   .command('list')
   .description('Shows a list of wallets history')
   .option('-w, --walletId <walletId>', 'Wallet id')
-  .action(handleListWhistory);
+  .action(decorateWithArgsLogger(handleListWhistory));
 
 whistory
   .command('export')
   .description('Export wallets history')
   .option('-w, --walletId <walletId>')
-  .action(handleExportWhistory);
+  .action(decorateWithArgsLogger(handleExportWhistory));
+
+const whistoryPlot = whistory
+  .command('plot')
+  .description('Plot wallets history');
+
+whistoryPlot
+  .command('days')
+  .description('Plot wallets history per day')
+  .requiredOption('-w, --walletId <walletId>')
+  .action(decorateWithArgsLogger(handlePlotWhistory));
+
+whistoryPlot
+  .command('diff')
+  .description('Plot wallets history diff')
+  .requiredOption('-w, --walletId <walletId>')
+  .option('-s, --span <span>', 'Span in days', '1')
+  .action(decorateWithArgsLogger(handlePlotWhistoryDiff));
 
 program.parse(process.argv);
+
+process.on('uncaughtException', async (err) => {
+  await logger.error('uncaughtException', err);
+});
+
+process.on('unhandledRejection', async (err) => {
+  await logger.error('unhandledRejection', err);
+});
+
+process.on('exit', async (code) => {
+  await logger.info('Skarb CLI exited with code', code);
+});

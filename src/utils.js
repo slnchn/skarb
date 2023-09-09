@@ -33,7 +33,11 @@ const formatDateToSimpleString = (date) => {
   return `${year}-${month}-${day}T${hours}-${minutes}-${seconds}`;
 };
 
+const MS_IN_DAY = 1000 * 60 * 60 * 24;
+const getDateDiffInDays = (date1, date2) => Math.abs(date2 - date1) / MS_IN_DAY;
+
 module.exports = {
   dropDatabaseColumnPrefix,
   formatDateToSimpleString,
+  getDateDiffInDays,
 };

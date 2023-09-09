@@ -54,7 +54,6 @@ const initDatabaseConnection = async () => {
           reject(err);
         }
 
-        console.log(db);
         resolve(db);
       });
     });

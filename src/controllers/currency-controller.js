@@ -1,31 +1,13 @@
 const {
-  insertCurrency,
-  selectCurrencies,
-  deleteCurrencyHard,
-  deleteCurrencySoft,
-  selectCurrenciesByNameCaseInsensitive,
-} = require('../repositories/currency-repository');
-const {
-  selectWalletsByCurrencyId,
-} = require('../repositories/wallet-repository');
-const { formatCurrencyFromDb } = require('../formatters/currency-formatter');
-const { formatWalletFromDb } = require('../formatters/wallets-formatter');
+  removeCurrency,
+  listCurrencies,
+  addCurrency,
+} = require('../services/currency-service');
 
 const handleAddCurrency = async (params) => {
   try {
-    const { name: currency } = params;
-
-    const currenciesWithSameName = await selectCurrenciesByNameCaseInsensitive(
-      currency,
-    );
-
-    if (!currenciesWithSameName.length) {
-      const result = await insertCurrency({ currency });
-      console.table(result.map(formatCurrencyFromDb));
-    } else {
-      console.error('Currency name is not unique. Please choose another one.');
-      console.table(currenciesWithSameName.map(formatCurrencyFromDb));
-    }
+    const { name } = params;
+    await addCurrency(name);
   } catch (error) {
     console.error(error);
   }
@@ -34,24 +16,7 @@ const handleAddCurrency = async (params) => {
 const handleRmCurrency = async (params) => {
   try {
     const { currencyId, hard } = params;
-
-    const relatedWallets = await selectWalletsByCurrencyId(currencyId);
-    if (!relatedWallets.length) {
-      let deletedCurrency = {};
-      if (hard) {
-        deletedCurrency = await deleteCurrencyHard(currencyId);
-      } else {
-        deletedCurrency = await deleteCurrencySoft(currencyId);
-      }
-
-      console.table(deletedCurrency.map(formatCurrencyFromDb));
-    } else {
-      console.error(
-        'There are wallets related to this currency. Please remove them first.',
-      );
-
-      console.table(relatedWallets.map(formatWalletFromDb));
-    }
+    await removeCurrency(currencyId, hard);
   } catch (error) {
     console.error(error);
   }
@@ -59,8 +24,7 @@ const handleRmCurrency = async (params) => {
 
 const handleListCurrencies = async () => {
   try {
-    const currencies = await selectCurrencies();
-    console.table(currencies.map(formatCurrencyFromDb));
+    await listCurrencies();
   } catch (error) {
     console.error(error);
   }

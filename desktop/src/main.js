@@ -4,6 +4,12 @@ const { app, ipcMain, BrowserWindow } = require('electron');
 const Store = require('electron-store');
 
 const { filterExistingFiles } = require('./service');
+const { initDatabaseConnection } = require('../../src/database');
+const { listWhistory } = require('../../src/services/whistory-service');
+const {
+  selectWalletHistory,
+  selectWalletsHistory,
+} = require('../../src/repositories/whistory-repository');
 
 const store = new Store();
 
@@ -44,6 +50,21 @@ async function deleteDbSource(event, dbSource) {
   return uniqueFiles;
 }
 
+async function connectToDb(event, dbSource) {
+  await initDatabaseConnection(dbSource);
+}
+
+async function getWhistory(event, walletId) {
+  let result = [];
+  if (walletId) {
+    result = await selectWalletHistory(walletId);
+  } else {
+    result = await selectWalletsHistory();
+  }
+
+  return result;
+}
+
 app.whenReady().then(() => {
   createWindow();
 
@@ -56,6 +77,9 @@ app.whenReady().then(() => {
   ipcMain.handle('add-db-source', handleAddDbSource);
   ipcMain.handle('get-db-sources', handleGetDbSources);
   ipcMain.handle('delete-db-source', deleteDbSource);
+  ipcMain.handle('connect-to-db', connectToDb);
+
+  ipcMain.handle('whistory:list', getWhistory);
 });
 
 app.on('window-all-closed', () => {

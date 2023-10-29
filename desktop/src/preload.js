@@ -6,13 +6,10 @@ contextBridge.exposeInMainWorld('electron', {
     getDbSources: () => ipcRenderer.invoke('get-db-sources'),
     deleteDbSource: (dbSource) =>
       ipcRenderer.invoke('delete-db-source', dbSource),
+    connectToDb: (dbSource) => ipcRenderer.invoke('connect-to-db', dbSource),
 
-    // send: (channel, data) => {
-    //   ipcRenderer.send(channel, data);
-    // },
-
-    // on: (channel, callback) => {
-    //   ipcRenderer.on(channel, (event, ...args) => callback(...args));
-    // },
+    whistory: {
+      list: (walletId) => ipcRenderer.invoke('whistory:list', walletId),
+    },
   },
 });

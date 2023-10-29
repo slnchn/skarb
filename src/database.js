@@ -46,10 +46,14 @@ const allSQL = (db, sql) =>
     });
   });
 
-const initDatabaseConnection = async () => {
+const initDatabaseConnection = async (filePath = './skarb.sqlite3') => {
   try {
+    if (databaseConnection) {
+      return databaseConnection;
+    }
+
     databaseConnection = new Promise((resolve, reject) => {
-      const db = new sqlite3.Database('./skarb.sqlite3', (err) => {
+      const db = new sqlite3.Database(filePath, (err) => {
         if (err) {
           reject(err);
         }

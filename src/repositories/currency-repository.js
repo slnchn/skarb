@@ -47,7 +47,7 @@ const deleteCurrencyHard = async (id) => {
 
 const selectCurrencies = async () => {
   const db = await initDatabaseConnection();
-  const currencies = await allSQL(db, `SELECT * FROM currencies`);
+  const currencies = await allSQL(db, `SELECT * FROM currencies ORDER BY c_id`);
   db.close();
   return currencies;
 };

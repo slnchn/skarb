@@ -1,4 +1,4 @@
-const { execAsync } = require('./utils');
+const { execAsync, delay } = require('./utils');
 
 const RESULT_TABLE_AFTER_FIRST_INSERT = `
 ┌─────────┬────┬───────┐
@@ -19,7 +19,9 @@ const RESULT_TABLE_AFTER_DELETION = `
 
 const insertCurrencies = async () => {
   await execAsync('skarb currencies add -n USD');
+  await delay(100);
   await execAsync('skarb currencies add -n EUR');
+  await delay(100);
   await execAsync('skarb currencies add -n PLN');
 };
 

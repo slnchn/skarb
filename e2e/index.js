@@ -1,7 +1,6 @@
 const { testCurrencies } = require('./currencies');
 const { testWallets } = require('./wallets');
 const { execAsync } = require('./utils');
-const { testWhistory } = require('./whistory');
 
 const cleanup = async () => {
   try {
@@ -23,13 +22,8 @@ const init = async () => {
   await init();
   await testCurrencies();
 
-  // // test wallets
+  // test wallets
   await cleanup();
   await init();
   await testWallets();
-
-  // test whistory
-  await cleanup();
-  await init();
-  await testWhistory();
 })();

@@ -35,6 +35,15 @@ async function handleGetDbSources() {
   return uniqueFiles;
 }
 
+async function deleteDbSource(event, dbSource) {
+  const dbSources = store.get('dbSources', []);
+  const connectionsToSet = dbSources.filter((db) => db !== dbSource);
+  const existingFiles = await filterExistingFiles(connectionsToSet);
+  const uniqueFiles = [...new Set(existingFiles)];
+  store.set('dbSources', uniqueFiles);
+  return uniqueFiles;
+}
+
 app.whenReady().then(() => {
   createWindow();
 
@@ -46,6 +55,7 @@ app.whenReady().then(() => {
 
   ipcMain.handle('add-db-source', handleAddDbSource);
   ipcMain.handle('get-db-sources', handleGetDbSources);
+  ipcMain.handle('delete-db-source', deleteDbSource);
 });
 
 app.on('window-all-closed', () => {

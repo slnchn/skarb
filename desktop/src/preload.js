@@ -4,6 +4,8 @@ contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {
     addDbSource: (dbSource) => ipcRenderer.invoke('add-db-source', dbSource),
     getDbSources: () => ipcRenderer.invoke('get-db-sources'),
+    deleteDbSource: (dbSource) =>
+      ipcRenderer.invoke('delete-db-source', dbSource),
 
     // send: (channel, data) => {
     //   ipcRenderer.send(channel, data);

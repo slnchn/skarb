@@ -24,6 +24,11 @@ const Connection = () => {
     }
   };
 
+  const onDelete = async (source) => {
+    const files = await window.electron.ipcRenderer.deleteDbSource(source);
+    setSources(files);
+  };
+
   return (
     <div>
       <label htmlFor="db-file-input">
@@ -34,7 +39,10 @@ const Connection = () => {
       <h2>Sources</h2>
       <ul>
         {sources.map((source) => (
-          <li key={source}>{source}</li>
+          <li key={source}>
+            <button onClick={() => onDelete(source)}>Delete</button>
+            <span>{source}</span>
+          </li>
         ))}
       </ul>
     </div>

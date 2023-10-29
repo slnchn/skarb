@@ -1,6 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Connection = () => {
+  const [sources, setSources] = useState([]);
+
+  useEffect(() => {
+    const getSources = async () => {
+      const sources = await window.electron.ipcRenderer.getDbSources();
+
+      setSources(sources);
+    };
+
+    getSources();
+  }, []);
+
   const onChange = async (e) => {
     const [pickedFile] = e.target.files;
     if (pickedFile) {
@@ -8,7 +20,7 @@ const Connection = () => {
         pickedFile.path,
       );
 
-      console.log(files);
+      setSources(files);
     }
   };
 
@@ -18,6 +30,13 @@ const Connection = () => {
         Pick a database file
         <input id="db-file-input" type="file" onChange={onChange} />
       </label>
+
+      <h2>Sources</h2>
+      <ul>
+        {sources.map((source) => (
+          <li key={source}>{source}</li>
+        ))}
+      </ul>
     </div>
   );
 };

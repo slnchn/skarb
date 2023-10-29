@@ -19,14 +19,21 @@ function createWindow() {
   win.loadFile(path.join(__dirname, '../dist/index.html'));
 }
 
-const handleAddDbSource = async (event, dbSource) => {
+async function handleAddDbSource(event, dbSource) {
   const dbSources = store.get('dbSources', []);
   const connectionsToSet = [...dbSources, dbSource];
   const existingFiles = await filterExistingFiles(connectionsToSet);
   const uniqueFiles = [...new Set(existingFiles)];
   store.set('dbSources', uniqueFiles);
   return uniqueFiles;
-};
+}
+
+async function handleGetDbSources() {
+  const dbSources = store.get('dbSources', []);
+  const existingFiles = await filterExistingFiles(dbSources);
+  const uniqueFiles = [...new Set(existingFiles)];
+  return uniqueFiles;
+}
 
 app.whenReady().then(() => {
   createWindow();
@@ -38,6 +45,7 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle('add-db-source', handleAddDbSource);
+  ipcMain.handle('get-db-sources', handleGetDbSources);
 });
 
 app.on('window-all-closed', () => {

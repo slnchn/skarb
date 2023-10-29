@@ -2,9 +2,8 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {
-    addDbSource: (dbSource) => {
-      ipcRenderer.invoke('add-db-source', dbSource);
-    },
+    addDbSource: (dbSource) => ipcRenderer.invoke('add-db-source', dbSource),
+    getDbSources: () => ipcRenderer.invoke('get-db-sources'),
 
     // send: (channel, data) => {
     //   ipcRenderer.send(channel, data);

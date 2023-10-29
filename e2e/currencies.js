@@ -27,6 +27,7 @@ const testInsertingCurrencies = async () => {
   await insertCurrencies();
   const { stdout } = await execAsync('skarb currencies list');
   if (!stdout.includes(RESULT_TABLE_AFTER_FIRST_INSERT)) {
+    console.log(stdout);
     throw new Error('testInsertingCurrencies failed');
   }
 };
@@ -35,6 +36,7 @@ const testRemovingCurrencies = async () => {
   await execAsync('skarb currencies rm -c 3 --hard');
   const { stdout } = await execAsync('skarb currencies list');
   if (!stdout.includes(RESULT_TABLE_AFTER_DELETION)) {
+    console.log(stdout);
     throw new Error('testRemovingCurrencies failed');
   }
 };

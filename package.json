@@ -35,6 +35,7 @@
   "dependencies": {
     "commander": "^11.0.0",
     "electron": "^27.0.2",
+    "electron-store": "^8.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sqlite3": "^5.1.6",

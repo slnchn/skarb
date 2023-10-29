@@ -3,4 +3,6 @@ import { createRoot } from 'react-dom/client';
 
 import App from './App';
 
-createRoot(document.getElementById('root')).render(<App />);
+window.addEventListener('DOMContentLoaded', () => {
+  createRoot(document.getElementById('root')).render(<App />);
+});

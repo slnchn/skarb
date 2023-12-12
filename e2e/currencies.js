@@ -49,4 +49,4 @@ const testCurrencies = async () => {
   console.log('testCurrencies passed!');
 };
 
-module.exports = { testCurrencies };
+module.exports = { testCurrencies, insertCurrencies };

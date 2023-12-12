@@ -1,5 +1,7 @@
 const { testCurrencies } = require('./currencies');
 const { testWallets } = require('./wallets');
+const { testWhistory } = require('./whistory');
+
 const { execAsync } = require('./utils');
 
 const cleanup = async () => {
@@ -16,14 +18,16 @@ const init = async () => {
   await execAsync('skarb migrate');
 };
 
-(async () => {
-  // test currencies
+const runTest = async (test) => {
   await cleanup();
   await init();
-  await testCurrencies();
+  await test();
+};
 
-  // test wallets
+(async () => {
+  await runTest(testCurrencies);
+  await runTest(testWallets);
+  await runTest(testWhistory);
+
   await cleanup();
-  await init();
-  await testWallets();
 })();

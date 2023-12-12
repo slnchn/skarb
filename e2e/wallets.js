@@ -1,3 +1,4 @@
+const { insertCurrencies } = require('./currencies');
 const { execAsync, delay } = require('./utils');
 
 const RESULT_TABLE_AFTER_FIRST_INSERT = `
@@ -16,14 +17,6 @@ const RESULT_TABLE_AFTER_DELETION = `
 │    0    │ 1  │ 'WalletUSD' │     1      │  'USD'   │
 │    1    │ 2  │ 'WalletEUR' │     2      │  'EUR'   │
 └─────────┴────┴─────────────┴────────────┴──────────┘`;
-
-const insertCurrencies = async () => {
-  await execAsync('skarb currencies add -n USD');
-  await delay(100);
-  await execAsync('skarb currencies add -n EUR');
-  await delay(100);
-  await execAsync('skarb currencies add -n PLN');
-};
 
 const insertWallets = async () => {
   await execAsync('skarb wallets add -n WalletUSD -c 1');
@@ -58,4 +51,4 @@ const testWallets = async () => {
   console.log('testWallets passed!');
 };
 
-module.exports = { testWallets };
+module.exports = { testWallets, insertWallets };

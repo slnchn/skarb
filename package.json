@@ -12,7 +12,8 @@
     "desktop:client:serve": "webpack serve --config ./desktop/webpack.config.js --mode development",
     "desktop:main:dev": "electron ./desktop/src/main.js",
     "start": "node ./src/index.js",
-    "lint": "eslint . --ext .js"
+    "lint": "eslint . --ext .js",
+    "e2e": "node ./e2e/index.js"
   },
   "keywords": [],
   "author": "",

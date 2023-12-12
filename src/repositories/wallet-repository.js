@@ -56,7 +56,7 @@ const selectWallets = async () => {
 
   const wallets = await allSQL(
     db,
-    `SELECT * FROM wallets LEFT JOIN currencies ON currencies.c_id = wallets.w_currencyId ORDER BY w_createdAt DESC`,
+    `SELECT * FROM wallets LEFT JOIN currencies ON currencies.c_id = wallets.w_currencyId ORDER BY w_id`,
   );
 
   db.close();

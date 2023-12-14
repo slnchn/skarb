@@ -1,13 +1,12 @@
 import React from 'react';
 
-import Connection from './Connection';
+// views
+import DbSourcesView from './views/db-sources-view';
 
 const App = () => {
   return (
-    <div>
-      <h1>Hello World</h1>
-
-      <Connection />
+    <div className="p-4 w-full h-full overflow-auto">
+      <DbSourcesView />
     </div>
   );
 };

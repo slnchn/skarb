@@ -16,6 +16,8 @@ const LinkSource = () => {
       return;
     }
 
+    // electron adds a 'path' property to the file object
+    // @ts-ignore
     await linkDbSourceMutation.mutateAsync(file.path);
   };
   return (

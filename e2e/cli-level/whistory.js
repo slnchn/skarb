@@ -1,11 +1,9 @@
-const { insertCurrencies } = require('./currencies');
-const { insertWallets } = require('./wallets');
-
-const { execAsync, delay } = require('./utils');
-
-const FIRST_WHISTORY_DATE = '2020-01-01';
-const SECOND_WHISTORY_DATE = '2020-01-02';
-const THIRD_WHISTORY_DATE = '2020-01-03';
+const {
+  execAsync,
+  insertWhistory,
+  insertCurrencies,
+  insertWallets,
+} = require('../utils');
 
 const RESULT_TABLE_AFTER_FIRST_INSERT = `
 ┌─────────┬────┬──────────┬─────────────┬──────────────┬────────┐
@@ -25,14 +23,6 @@ const RESULT_TABLE_AFTER_DELETION = `
 │    1    │ 1  │    1     │ 'WalletUSD' │ '2020-01-01' │  100   │
 └─────────┴────┴──────────┴─────────────┴──────────────┴────────┘
 `;
-
-const insertWhistory = async () => {
-  await execAsync(`skarb whistory add -w 1 -a 100 -d ${FIRST_WHISTORY_DATE}`);
-  await delay(100);
-  await execAsync(`skarb whistory add -w 1 -a 200 -d ${SECOND_WHISTORY_DATE}`);
-  await delay(100);
-  await execAsync(`skarb whistory add -w 1 -a 300 -d ${THIRD_WHISTORY_DATE}`);
-};
 
 const testInsertingWhistory = async () => {
   await insertCurrencies();

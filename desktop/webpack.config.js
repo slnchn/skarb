@@ -11,7 +11,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
 
   module: {
@@ -20,6 +20,11 @@ module.exports = {
         test: /\.jsx?$/i,
         exclude: /node_modules/,
         use: 'babel-loader',
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: 'ts-loader',
       },
       {
         test: /\.css$/i,

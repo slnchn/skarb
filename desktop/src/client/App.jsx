@@ -1,12 +1,12 @@
 import React from 'react';
 
 // views
-import DbSourcesView from './views/db-sources-view';
+import ConnectionPanel from './ConnectionPanel';
 
 const App = () => {
   return (
-    <div className="p-4 w-full h-full overflow-auto">
-      <DbSourcesView />
+    <div className="w-full h-full overflow-auto">
+      <ConnectionPanel />
     </div>
   );
 };

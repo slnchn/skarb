@@ -1,4 +1,4 @@
-const { initDatabaseConnection, allSQL } = require('../database');
+const { initDatabaseConnection, allSQL } = require('../db');
 
 const selectLatestMigration = async () => {
   const db = await initDatabaseConnection();

@@ -1,7 +1,7 @@
 const Store = require('electron-store');
 
 const { filterExistingFiles } = require('../service');
-const { initDatabaseConnection } = require('../../../src/database');
+const { initDatabaseConnection } = require('../../../database');
 
 const store = new Store();
 

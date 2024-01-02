@@ -2,7 +2,7 @@ const {
   removeCurrency,
   listCurrencies,
   addCurrency,
-} = require('../services/currency-service');
+} = require('../../services/currency-service');
 
 const handleAddCurrency = async (params) => {
   try {

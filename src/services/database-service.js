@@ -1,4 +1,4 @@
-const { initDatabaseConnection, execSQL } = require('../database');
+const { initDatabaseConnection, execSQL } = require('../../database');
 const { migrationsMap } = require('../queries/migrations');
 const {
   selectLatestMigration,

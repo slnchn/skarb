@@ -1,4 +1,4 @@
-const { initDatabaseConnection, runSQL, allSQL } = require('../database');
+const { initDatabaseConnection, runSQL, allSQL } = require('../../database');
 
 const insertWhistory = async ({ walletId, amount, date }) => {
   const db = await initDatabaseConnection();

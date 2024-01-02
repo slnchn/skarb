@@ -1,4 +1,5 @@
 const fs = require('node:fs/promises');
+
 const sqlite3 = require('sqlite3');
 
 let databaseConnection = null;

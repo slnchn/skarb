@@ -1,8 +1,8 @@
-const { initDatabaseConnection, execSQL } = require('../../database');
-const { migrationsMap } = require('../queries/migrations');
+const { initDatabaseConnection, execSQL } = require('./db');
+const { migrationsMap } = require('./queries/migrations');
 const {
   selectLatestMigration,
-} = require('../repositories/migrations-repository');
+} = require('./repositories/migrations-repository');
 
 const createDatabase = async () => {
   try {

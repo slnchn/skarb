@@ -5,10 +5,10 @@ const {
   deleteCurrencyHard,
   deleteCurrencySoft,
   selectCurrencies,
-} = require('../repositories/currency-repository');
+} = require('../../database/repositories/currency-repository');
 const {
   selectWalletsByCurrencyId,
-} = require('../repositories/wallet-repository');
+} = require('../../database/repositories/wallet-repository');
 
 // formatters
 const { formatCurrencyFromDb } = require('../formatters/currency-formatter');

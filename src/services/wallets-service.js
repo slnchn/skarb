@@ -5,14 +5,16 @@ const {
   deleteWalletHard,
   deleteWalletSoft,
   selectWallets,
-} = require('../repositories/wallet-repository');
-const { selectCurrencyById } = require('../repositories/currency-repository');
+} = require('../../database/repositories/wallet-repository');
+const {
+  selectCurrencyById,
+} = require('../../database/repositories/currency-repository');
+const {
+  selectWalletsHistoryByWalletId,
+} = require('../../database/repositories/whistory-repository');
 
 // formatters
 const { formatWalletFromDb } = require('../formatters/wallets-formatter');
-const {
-  selectWalletsHistoryByWalletId,
-} = require('../repositories/whistory-repository');
 
 const addWallet = async (currencyId, wallet) => {
   const walletsWithSameName = await selectWalletsByNameCaseInsensitive(wallet);

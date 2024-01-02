@@ -1,4 +1,4 @@
-const { initDatabaseConnection, allSQL } = require('../../database');
+const { initDatabaseConnection, allSQL } = require('../../database/db');
 const {
   insertCurrencies,
   insertWallets,

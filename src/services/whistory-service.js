@@ -1,11 +1,16 @@
-const { selectWalletById } = require('../repositories/wallet-repository');
+const child = require('node:child_process');
+const path = require('node:path');
+
+const {
+  selectWalletById,
+} = require('../../database/repositories/wallet-repository');
 const {
   insertWhistory,
   deleteWalletHistoryHard,
   deleteWalletHistorySoft,
   selectWalletHistory,
   selectWalletsHistory,
-} = require('../repositories/whistory-repository');
+} = require('../../database/repositories/whistory-repository');
 
 // services
 const { getTableCsvContent, exportData } = require('./exporting-service');
@@ -15,8 +20,6 @@ const { formatWhistoryFromDb } = require('../formatters/whistory-formatter');
 
 // utils
 const { formatDateToSimpleString } = require('../utils');
-const child = require('child_process');
-const path = require('path');
 const {
   chunkWhistoryByDays,
   getWhistorySpanDiff,

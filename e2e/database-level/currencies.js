@@ -1,4 +1,4 @@
-const { allSQL, initDatabaseConnection } = require('../../database');
+const { allSQL, initDatabaseConnection } = require('../../database/db');
 const {
   insertCurrencies,
   checkIfAllItemsExist,

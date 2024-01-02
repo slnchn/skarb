@@ -1,7 +1,7 @@
 const {
   createDatabase,
   migrateDatabase,
-} = require('../../database/database-service');
+} = require('../../database/db-service');
 const { exportData } = require('../services/exporting-service');
 
 const handleInit = async () => {

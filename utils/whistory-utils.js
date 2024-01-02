@@ -1,4 +1,4 @@
-const { getDateDiffInDays } = require('../utils');
+const { getDateDiffInDays } = require('./utils');
 
 const chunkWhistoryByDays = (data, days) => {
   const result = [[]];

@@ -2,7 +2,7 @@ const {
   addWallet,
   removeWallet,
   listWallets,
-} = require('../services/wallets-service');
+} = require('../../services/wallets-service');
 
 const handleAddWallet = async (params) => {
   try {

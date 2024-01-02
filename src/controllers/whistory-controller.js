@@ -5,7 +5,7 @@ const {
   exportWhistory,
   plotWhistory,
   plotWhistoryDiff,
-} = require('../services/whistory-service');
+} = require('../../services/whistory-service');
 const { logger } = require('../logger');
 
 const handleAddWhistoryEntry = async (params) => {

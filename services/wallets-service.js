@@ -5,13 +5,13 @@ const {
   deleteWalletHard,
   deleteWalletSoft,
   selectWallets,
-} = require('../../database/repositories/wallet-repository');
+} = require('../database/repositories/wallet-repository');
 const {
   selectCurrencyById,
-} = require('../../database/repositories/currency-repository');
+} = require('../database/repositories/currency-repository');
 const {
   selectWalletsHistoryByWalletId,
-} = require('../../database/repositories/whistory-repository');
+} = require('../database/repositories/whistory-repository');
 
 // formatters
 const { formatWalletFromDb } = require('../formatters/wallets-formatter');

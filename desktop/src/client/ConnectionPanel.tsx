@@ -1,9 +1,20 @@
 import React, { useState } from 'react';
 
 import DbSourcesView from './views/db-sources-view';
+import { useCurrentConnection } from './queries/db-source-queries';
 
 const ConnectionPanel = () => {
   const [open, setOpen] = useState(false);
+
+  const { data, isLoading, isError } = useCurrentConnection();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error</div>;
+  }
 
   const togglePanel = () => {
     setOpen(!open);
@@ -20,6 +31,12 @@ const ConnectionPanel = () => {
         onClick={togglePanel}
       >
         <button className="font-bold">Connection</button>
+
+        {data ? (
+          <p className="text-sm">{data}</p>
+        ) : (
+          <p className="text-sm">No connection</p>
+        )}
       </header>
 
       {open ? (

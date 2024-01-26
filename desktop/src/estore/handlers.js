@@ -1,7 +1,10 @@
 const Store = require('electron-store');
 
 const { filterExistingFiles } = require('../service');
-const { initDatabaseConnection } = require('../../../database/db');
+const {
+  initDatabaseConnection,
+  getDatabaseConnectionData,
+} = require('../../../database/db');
 
 const store = new Store();
 
@@ -34,9 +37,14 @@ async function connectToDb(event, dbSource) {
   await initDatabaseConnection(dbSource);
 }
 
+async function getCurrentConnection() {
+  return getDatabaseConnectionData();
+}
+
 module.exports = {
   handleAddDbSource,
   handleGetDbSources,
   deleteDbSource,
   connectToDb,
+  getCurrentConnection,
 };

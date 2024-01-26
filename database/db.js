@@ -65,9 +65,19 @@ const initDatabaseConnection = async (filePath = './skarb.sqlite3') => {
   }
 };
 
+const getDatabaseConnectionData = async () => {
+  if (!databaseConnection) {
+    return null;
+  }
+
+  const result = await databaseConnection;
+  return result.filename;
+};
+
 module.exports = {
   checkIfDatabaseExists,
   initDatabaseConnection,
+  getDatabaseConnectionData,
   runSQL,
   execSQL,
   allSQL,

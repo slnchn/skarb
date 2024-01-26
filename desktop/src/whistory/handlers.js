@@ -1,7 +1,7 @@
 const {
   selectWalletHistory,
   selectWalletsHistory,
-} = require('../../../src/repositories/whistory-repository');
+} = require('../../../database/repositories/whistory-repository');
 
 async function getWhistory(event, walletId) {
   let result = [];

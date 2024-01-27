@@ -64,6 +64,31 @@ const selectWallets = async () => {
   return wallets;
 };
 
+const selectWalletsWithLatestWh = async () => {
+  const db = await initDatabaseConnection();
+
+  const wallets = await allSQL(
+    db,
+    `
+    SELECT *
+    FROM wallets
+    LEFT JOIN currencies ON currencies.c_id = wallets.w_currencyId
+    LEFT JOIN (
+      SELECT *, max(wh_createdAt)
+      FROM wallets_history
+      WHERE wh_deletedAt IS NULL
+      GROUP BY wh_walletId
+    ) wh ON wallets.w_id = wh.wh_walletid
+    WHERE w_deletedAt IS NULL
+    ORDER BY w_id;
+    `,
+  );
+
+  db.close();
+
+  return wallets;
+};
+
 const selectWalletById = async (id) => {
   const db = await initDatabaseConnection();
 
@@ -108,6 +133,7 @@ module.exports = {
   deleteWalletSoft,
   deleteWalletHard,
   selectWallets,
+  selectWalletsWithLatestWh,
   selectWalletById,
   selectWalletsByCurrencyId,
   selectWalletsByNameCaseInsensitive,

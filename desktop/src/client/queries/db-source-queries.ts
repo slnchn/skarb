@@ -8,7 +8,7 @@ import {
 
 export const useDbSources = (): UseQueryResult<string[]> => {
   return useQuery<string[]>('dbSources', () =>
-    window.electron.ipcRenderer.connections.getDbSources(),
+    window.electron.ipcRenderer.connection.getDbSources(),
   );
 };
 
@@ -21,7 +21,7 @@ export const useLinkDbSource = (): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation(
     (filePath: string) =>
-      window.electron.ipcRenderer.connections.addDbSource(filePath),
+      window.electron.ipcRenderer.connection.addDbSource(filePath),
     {
       onSuccess: () => {
         queryClient.invalidateQueries('dbSources');
@@ -39,7 +39,7 @@ export const useRemoveDbSource = (): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation(
     (filePath: string) =>
-      window.electron.ipcRenderer.connections.deleteDbSource(filePath),
+      window.electron.ipcRenderer.connection.deleteDbSource(filePath),
     {
       onSuccess: () => {
         queryClient.invalidateQueries('dbSources');
@@ -57,7 +57,7 @@ export const useConnectToDb = (): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation(
     (filePath: string) =>
-      window.electron.ipcRenderer.connections.connectToDb(filePath),
+      window.electron.ipcRenderer.connection.connectToDb(filePath),
     {
       onSuccess: () => {
         queryClient.invalidateQueries('dbSources');
@@ -69,6 +69,6 @@ export const useConnectToDb = (): UseMutationResult<
 
 export const useCurrentConnection = (): UseQueryResult<string | null> => {
   return useQuery<string | null>('currentConnection', () =>
-    window.electron.ipcRenderer.connections.getCurrentConnection(),
+    window.electron.ipcRenderer.connection.getCurrentConnection(),
   );
 };

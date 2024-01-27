@@ -15,7 +15,7 @@ const {
   getCurrentConnection,
 } = require('./handlers');
 
-const setupEstoreHandlers = () => {
+const setupConnectionHandlers = () => {
   ipcMain.handle(ADD_DB_SOURCE, handleAddDbSource);
   ipcMain.handle(GET_DB_SOURCES, handleGetDbSources);
   ipcMain.handle(DELETE_DB_SOURCE, deleteDbSource);
@@ -24,5 +24,5 @@ const setupEstoreHandlers = () => {
 };
 
 module.exports = {
-  setupEstoreHandlers,
+  setupConnectionHandlers,
 };

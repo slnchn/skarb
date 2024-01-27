@@ -10,7 +10,7 @@
     "desktop:client:build:dev": "webpack --config ./desktop/webpack.config.js --mode development",
     "desktop:client:build:watch": "webpack --watch --config ./desktop/webpack.config.js --mode development",
     "desktop:client:serve": "webpack serve --config ./desktop/webpack.config.js --mode development",
-    "desktop:main:dev": "nodemon --exec electron ./desktop/src/main.js",
+    "desktop:main:dev": "nodemon -w ./desktop/src --exec electron ./desktop/src/main.js",
     "desktop:dev": "concurrently \"npm run desktop:client:build:watch\" \"npm run desktop:main:dev\"",
     "start": "node ./src/index.js",
     "lint": "eslint . --ext .js",

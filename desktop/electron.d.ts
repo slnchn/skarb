@@ -1,7 +1,7 @@
 interface Window {
   electron: {
     ipcRenderer: {
-      connections: {
+      connection: {
         getDbSources: () => Promise<string[]>;
         addDbSource: (filePath: string) => Promise<string[]>;
         deleteDbSource: (filePath: string) => Promise<string[]>;

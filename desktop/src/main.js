@@ -2,7 +2,7 @@ const path = require('node:path');
 
 const { app, BrowserWindow } = require('electron');
 
-const { setupEstoreHandlers } = require('./estore');
+const { setupConnectionHandlers } = require('./connection');
 const { setupWhistoryHandlers } = require('./whistory');
 
 function createWindow() {
@@ -29,7 +29,7 @@ app.whenReady().then(() => {
   });
 
   // setup handlers
-  setupEstoreHandlers();
+  setupConnectionHandlers();
   setupWhistoryHandlers();
 });
 

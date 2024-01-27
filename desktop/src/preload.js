@@ -6,12 +6,12 @@ const {
   DELETE_DB_SOURCE,
   CONNECT_TO_DB,
   GET_CURRENT_CONNECTION,
-} = require('./estore/channels');
+} = require('./connection/channels');
 const { LIST_WHISTORY } = require('./whistory/channels');
 
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {
-    connections: {
+    connection: {
       addDbSource: (dbSource) => ipcRenderer.invoke(ADD_DB_SOURCE, dbSource),
       getDbSources: () => ipcRenderer.invoke(GET_DB_SOURCES),
       deleteDbSource: (dbSource) =>

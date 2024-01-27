@@ -43,7 +43,7 @@ const DbSourcesView = () => {
 
   return (
     <div className="w-full">
-      <h1 className="text-center font-extrabold text-2xl">Sources</h1>
+      <h2 className="text-center font-extrabold text-2xl">Sources</h2>
 
       <div className="mt-10 w-full flex justify-center">
         <LinkSource />

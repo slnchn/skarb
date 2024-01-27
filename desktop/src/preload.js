@@ -7,6 +7,7 @@ const {
   CONNECT_TO_DB,
   GET_CURRENT_CONNECTION,
 } = require('./connection/channels');
+const { LIST_WALLETS } = require('./wallets/channels');
 const { LIST_WHISTORY } = require('./whistory/channels');
 
 contextBridge.exposeInMainWorld('electron', {
@@ -22,6 +23,10 @@ contextBridge.exposeInMainWorld('electron', {
 
     whistory: {
       list: (walletId) => ipcRenderer.invoke(LIST_WHISTORY, walletId),
+    },
+
+    wallets: {
+      list: () => ipcRenderer.invoke(LIST_WALLETS),
     },
   },
 });

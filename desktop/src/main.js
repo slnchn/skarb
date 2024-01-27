@@ -3,6 +3,7 @@ const path = require('node:path');
 const { app, BrowserWindow } = require('electron');
 
 const { setupConnectionHandlers } = require('./connection');
+const { setupWalletsHandlers } = require('./wallets');
 const { setupWhistoryHandlers } = require('./whistory');
 
 function createWindow() {
@@ -30,6 +31,7 @@ app.whenReady().then(() => {
 
   // setup handlers
   setupConnectionHandlers();
+  setupWalletsHandlers();
   setupWhistoryHandlers();
 });
 

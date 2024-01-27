@@ -10,7 +10,7 @@
     "desktop:client:build:dev": "webpack --config ./desktop/webpack.config.js --mode development",
     "desktop:client:build:watch": "webpack --watch --config ./desktop/webpack.config.js --mode development",
     "desktop:client:serve": "webpack serve --config ./desktop/webpack.config.js --mode development",
-    "desktop:main:dev": "electron ./desktop/src/main.js",
+    "desktop:main:dev": "nodemon --exec electron ./desktop/src/main.js",
     "start": "node ./src/index.js",
     "lint": "eslint . --ext .js",
     "e2e": "node ./e2e/index.js"
@@ -34,6 +34,7 @@
     "eslint-plugin-react": "^7.33.2",
     "html-webpack-plugin": "^5.5.3",
     "mini-css-extract-plugin": "^2.7.6",
+    "nodemon": "^3.0.3",
     "postcss": "^8.4.32",
     "postcss-loader": "^7.3.3",
     "prettier": "^3.0.0",

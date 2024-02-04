@@ -89,8 +89,9 @@ const plotWhistory = async (walletId) => {
   const walletHistory = await selectWalletHistory(walletId);
 
   const process = child.spawn('python', [
-    path.join(__dirname, '../../scripts/plot_whistory.py'),
-    JSON.stringify(walletHistory),
+    path.join(__dirname, '../scripts/plot_whistory.py'),
+    // TODO: write to stdin instead
+    JSON.stringify(walletHistory.slice(-90)),
   ]);
 
   process.stdout.on('data', (data) => {
@@ -113,8 +114,9 @@ const plotWhistoryDiff = async (walletId, span) => {
   const whistoryDiff = whistoryByDays.map(getWhistorySpanDiff);
 
   const process = child.spawn('python', [
-    path.join(__dirname, '../../scripts/plot_whistory_diff.py'),
-    JSON.stringify(whistoryDiff),
+    path.join(__dirname, '../scripts/plot_whistory_diff.py'),
+    // TODO: write to stdin instead
+    JSON.stringify(whistoryDiff.slice(-90)),
   ]);
 
   process.stdout.on('data', (data) => {

@@ -10,6 +10,14 @@ interface DesktopWalletResponse extends Wallet {
   latestBalanceTs: string | null;
 }
 
+interface DesktopWhistoryResponse {
+  id: number;
+  amount: number;
+  date: string;
+  wallet: string;
+  walletId: number;
+}
+
 interface Window {
   electron: {
     ipcRenderer: {
@@ -23,6 +31,10 @@ interface Window {
 
       wallets: {
         list: () => Promise<DesktopWalletResponse[]>;
+      };
+
+      whistory: {
+        list: (walletId: string) => Promise<DesktopWhistoryResponse[]>;
       };
     };
   };

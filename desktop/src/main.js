@@ -8,16 +8,18 @@ const { setupWhistoryHandlers } = require('./whistory');
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 800,
+    width: 1600,
     height: 600,
     webPreferences: {
       // TODO: investigate if it's correct to set this to false
       sandbox: false,
       preload: path.join(__dirname, './preload.js'),
+      devTools: true,
     },
   });
 
   win.loadFile(path.join(__dirname, '../dist/index.html'));
+  win.webContents.openDevTools();
 }
 
 app.whenReady().then(() => {

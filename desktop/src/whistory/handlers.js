@@ -1,17 +1,13 @@
 const {
   selectWalletHistory,
-  selectWalletsHistory,
 } = require('../../../database/repositories/whistory-repository');
+const {
+  formatWhistoryFromDb,
+} = require('../../../formatters/whistory-formatter');
 
 async function getWhistory(event, walletId) {
-  let result = [];
-  if (walletId) {
-    result = await selectWalletHistory(walletId);
-  } else {
-    result = await selectWalletsHistory();
-  }
-
-  return result;
+  const rawWhistory = await selectWalletHistory(walletId);
+  return rawWhistory.map(formatWhistoryFromDb);
 }
 
 module.exports = {

@@ -6,7 +6,7 @@ import WalletsView from './views/wallets-view';
 
 const App = () => {
   return (
-    <div className="w-full h-full overflow-auto">
+    <div className="w-full h-screen overflow-hidden flex">
       <WalletsView />
 
       <ConnectionPanel />

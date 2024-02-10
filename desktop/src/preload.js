@@ -21,12 +21,12 @@ contextBridge.exposeInMainWorld('electron', {
       getCurrentConnection: () => ipcRenderer.invoke(GET_CURRENT_CONNECTION),
     },
 
-    whistory: {
-      list: (walletId) => ipcRenderer.invoke(LIST_WHISTORY, walletId),
-    },
-
     wallets: {
       list: () => ipcRenderer.invoke(LIST_WALLETS),
+    },
+
+    whistory: {
+      list: (walletId) => ipcRenderer.invoke(LIST_WHISTORY, walletId),
     },
   },
 });
